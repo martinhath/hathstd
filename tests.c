@@ -10,10 +10,12 @@ void print_stats();
 
 // tests
 void test_list_push();
+void test_list_pop_back();
 
 
 int main() {
     test_list_push();
+    test_list_pop_back();
     print_stats();
 }
 
@@ -28,6 +30,21 @@ void test_list_push() {
     eq(strcmp("veldig", list_pop(list)));
     eq(strcmp("er", list_pop(list)));
     eq(strcmp("martin", list_pop(list)));
+    list_delete(list, 1);
+}
+
+void test_list_pop_back() {
+    List *list = list_create();
+    list_push(list, "martin");
+    list_push(list, "er");
+    list_push(list, "veldig");
+    list_push(list, "kul");
+
+    eq(strcmp("martin", list_pop_back(list)));
+    eq(strcmp("er", list_pop_back(list)));
+    eq(strcmp("veldig", list_pop_back(list)));
+    eq(strcmp("kul", list_pop_back(list)));
+    list_delete(list, 1);
 }
 
 

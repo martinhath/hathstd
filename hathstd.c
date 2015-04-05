@@ -6,15 +6,28 @@
 // Linked List implementation
 List *list_create(void) {
     List *list = emalloc(sizeof(List));
+    list->head = NULL;
     return list;
+}
+
+void list_delete(List* list, int free_nodes) {
+    if (free_nodes) {
+        Node *n = list->head;
+        while (n != NULL) {
+            Node *tmp = n->next;
+            free(n);
+            n = tmp;
+        }
+    }
+    free(list);
 }
 
 // Pushed to the front
 List *list_push(List *list, void *val) {
     Node *node = emalloc(sizeof(Node));
-    Node *head = list->head;
+    Node *snd = list->head;
     list->head = node;
-    node->next = head;
+    node->next = snd;
     node->val = val;
     return list;
 }
@@ -35,8 +48,25 @@ void *list_pop(List *list) {
     Node *node = list->head;
     list->head = node->next;
     void *p = node->val;
+    if (node == list->head)
+        list->head = NULL;
     free(node);
     return p;
+}
+
+void *list_pop_back(List *list) {
+    Node *node = list->head;
+    Node *prev = node;
+    while (node->next != NULL) {
+        prev = node;
+        node = node->next;
+    }
+    prev->next = NULL;
+    void *val = node->val;
+    if (node == list->head)
+        list->head = NULL;
+    free(node);
+    return val;
 }
 
 int list_empty(List *list) {

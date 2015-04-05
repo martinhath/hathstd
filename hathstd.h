@@ -11,11 +11,13 @@ typedef struct List {
 
 
 List *list_create(void);
+void list_delete(List*, int);
 
 List *list_push(List*, void*);
 List *list_push_back(List*, void*);
 
 void *list_pop(List*);
+void *list_pop_back(List*);
 
 int list_empty(List*);
 
