@@ -18,6 +18,7 @@ void test_array_add();
 void test_array_set();
 void test_array_get();
 void test_array_resize();
+void test_array_clone();
 
 
 int main() {
@@ -30,6 +31,7 @@ int main() {
     test_array_get();
     test_array_add();
     test_array_resize();
+    test_array_clone();
 
     print_stats();
 }
@@ -86,7 +88,7 @@ void test_list_pop_empty() {
 
 // end list
 
-void print(void *s) {
+void println(void *s) {
     printf("%s\n", s);
 }
 
@@ -119,7 +121,7 @@ void test_array_add() {
     array_add(array, "test");
     array_add(array, "lel");
     array_add(array, "kek");
-    array_foreach(array, print);
+    array_foreach(array, println);
     array_free(array);
 }
 
@@ -151,6 +153,37 @@ void test_array_resize() {
     array_free(array);
 }
 
+void print(void *str) {
+    printf("%s ", str);
+}
+
+void test_array_clone() {
+    Array *array = array_create();
+    array_add(array, "the");
+    array_add(array, "quick");
+    array_add(array, "brown");
+    array_add(array, "fox");
+    array_add(array, "jumped");
+
+    printf("Print out original:\n");
+    array_foreach(array, print);
+    printf("\n");
+
+    Array *copy = array_clone(array);
+
+    printf("Print out copy:\n");
+    array_foreach(copy, print);
+
+    int res = 0;
+    for (size_t i = 0; i < 4; i++) {
+        void *a = array_get(array, i);
+        void *b = array_get(copy, i);
+        res |= strcmp(a, b) == 0;
+    }
+    true(res);
+    printf("\n");
+}
+
 // Testing functions
 static size_t N;
 static size_t F;
@@ -171,6 +204,7 @@ void eq(int a, int b) {
 }
 
 void print_stats() {
+    printf("================\n");
     printf("Ran all tests.\n%zu/%zu passed.\n",
             N-F, N);
 }

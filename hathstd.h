@@ -39,6 +39,8 @@ void *array_get(Array*, size_t);
 int array_set(Array*, size_t, void*);
 int array_add(Array*, void*);
 
+Array *array_clone(Array*);
+
 void array_foreach(Array*, void (*f)(void*));
 Array *array_map(Array*, void* (*f)(void*));
 

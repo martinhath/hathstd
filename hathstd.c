@@ -137,6 +137,14 @@ int array_add(Array *array, void *elem) {
     return 1;
 }
 
+Array *array_clone(Array *array) {
+    Array *arr = array_create();
+    array_resize_to(arr, array->size);
+    memmove(arr->array, array->array, array->size * sizeof(void*));
+    arr->size = array->size;
+    return arr;
+}
+
 void array_foreach(Array *array, void (*function)(void*)) {
     for (size_t i = 0; i < array->size; i++) {
         void *e = array_get(array, i);
@@ -155,7 +163,6 @@ Array *array_map(Array *array, void* (*function)(void*)) {
     return arr;
 }
 
-
 size_t array_size(Array *array) {
     return array->size;
 }
@@ -167,8 +174,10 @@ void array_free(Array *array) {
 
 static int array_check_size(Array *array, size_t i) {
     if (i >= array->size) {
+#ifdef DEBUG
         fprintf(stderr, "[array_get] index out of bounds: index: %zu\
 \tsize: %zu\n", i, array->size);
+#endif
         return 0;
     }
     return 1;
@@ -176,8 +185,10 @@ static int array_check_size(Array *array, size_t i) {
 
 static void array_resize(Array *array) {
     size_t cap = array->capacity * 1.5;
+#ifdef DEBUG
     fprintf(stderr, "Resizing array at %p: %zu -> %zu\n",
             array, array->capacity, cap);
+#endif
     void **arr = emalloc(cap * sizeof(void*));
     memmove(arr, array->array, array->size * sizeof(void*));
     free(array->array);
@@ -185,7 +196,9 @@ static void array_resize(Array *array) {
     array->capacity = cap;
 }
 
+// does not pack!
 static void array_resize_to(Array *array, size_t cap) {
+    if (array->capacity >= cap) return;
     void **arr = emalloc(cap * sizeof(void*));
     memmove(arr, array->array, array->size * sizeof(void*));
     free(array->array);
