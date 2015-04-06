@@ -39,11 +39,14 @@ void test_list_push() {
     list_push(list, "veldig");
     list_push(list, "kul");
 
+    true(list_size(list) == 4);
+
     true(strcmp("kul", list_pop(list)) == 0);
     true(strcmp("veldig", list_pop(list)) == 0);
     true(strcmp("er", list_pop(list)) == 0);
     true(strcmp("martin", list_pop(list)) == 0);
-    list_free(list, 1);
+    true(list_size(list) == 0);
+    list_free(list);
 }
 
 void test_list_pop_back() {
@@ -57,7 +60,7 @@ void test_list_pop_back() {
     true(strcmp("er", list_pop_back(list)) == 0);
     true(strcmp("veldig", list_pop_back(list)) == 0);
     true(strcmp("kul", list_pop_back(list)) == 0);
-    list_free(list, 1);
+    list_free(list);
 }
 
 void test_list_empty() {
@@ -66,7 +69,7 @@ void test_list_empty() {
     true(!list_empty(list));
     list_pop(list);
     true(list_empty(list));
-    list_free(list, 1);
+    list_free(list);
 }
 
 void test_list_pop_empty() {
@@ -74,7 +77,7 @@ void test_list_pop_empty() {
     list_push(list, "tom");
     list_pop(list);
     list_pop(list);
-    list_free(list, 1);
+    list_free(list);
     true(1);
 }
 
@@ -111,7 +114,7 @@ void test_array_add() {
     array_add(array, "is");
     array_add(array, "a");
     array_add(array, "test");
-    array_map(array, print);
+    array_foreach(array, print);
     array_free(array);
 }
 

@@ -12,14 +12,12 @@ List *list_create(void) {
     return list;
 }
 
-void list_free(List* list, int free_nodes) {
-    if (free_nodes) {
-        Node *n = list->head;
-        while (n != NULL) {
-            Node *tmp = n->next;
-            free(n);
-            n = tmp;
-        }
+void list_free(List* list) {
+    Node *n = list->head;
+    while (n != NULL) {
+        Node *tmp = n->next;
+        free(n);
+        n = tmp;
     }
     free(list);
 }
@@ -73,6 +71,16 @@ void *list_pop_back(List *list) {
     return val;
 }
 
+size_t list_size(List *list) {
+    size_t c = 0;
+    Node *node = list->head;
+    while (node != NULL){
+        node = node->next;
+        c++;
+    }
+    return c;
+}
+
 int list_empty(List *list) {
     return list->head == NULL;
 }
@@ -87,13 +95,18 @@ int list_contains(List* list, void *elem, int (*cmp)(void *a, void*b)) {
     return 0;
 }
 
+void list_foreach(List* list, void (*function)(void*)) {
+    for (Node *node = list->head; node != NULL; node = node->next)
+        function(node);
+}
+
 // End Linked List
 
 // Safe Array
 static void array_resize(Array*);
 static int array_check_size(Array*, size_t);
 
-Array *array_create() {
+Array *array_create(void) {
 #define INIT_CAP 4
     Array *arr = emalloc(sizeof(Array));
     arr->capacity = INIT_CAP;
@@ -123,11 +136,15 @@ int array_add(Array *array, void *elem) {
     return 1;
 }
 
-void array_map(Array *array, void (*function)(void*)) {
+void array_foreach(Array *array, void (*function)(void*)) {
     for (size_t i = 0; i < array->size; i++) {
         void *e = array_get(array, i);
         function(e);
     }
+}
+
+size_t array_size(Array *array) {
+    return array->size;
 }
 
 void array_free(Array *array) {
