@@ -3,6 +3,10 @@
 The C standard library is small - perhaps a little too small?
 In any case, I've decided to write a little library for myself, containing stuff I might find useful.
 
+### Notes
+
+ - For all functions that returns an `int` for errors, zero is failure.
+
 ## Containers
 
 ### `List`
@@ -17,7 +21,14 @@ There are also some convenient funcions, such as `array_clone`, `array_foreach`.
 
 | Function name | description | 
 |---------------|-------------|
-| `array_create(void)` | Creates a new array |
-| `array_get(Array*, size_t)` | Retrieves the element at an index |
+| `Array *array_create(void)` | Creates a new array |
+| `void array_free(Array*)` | Frees the array |
+| `void *array_get(Array*, size_t)`   | Retrieves the element at the specified index |
+| `int array_add(Array*, void*)` | Inserts an element at the end of the array |
+| `int array_set(Array*, size_t, void*)` | Inserts an element at the specified index |
+| `size_t array_size(Array*)` | Returns the number of elements in the array |
+| `Array *array_clone(Array*)` | Clones the array, returning a new. The `void*` are only copied, meaning they will point to the same data as the original array |
+| `void array_foreach(Array*, void (*f)(void*))` | Runs the given function on all members of the array |
+| `Array *array_map(Array*, void *(*f)(void*))` | Creates a new array where each element is `e=f(a)` for all `a` in the given array |
 
-TODO: more
+Note the difference between `foreach` and `map`. Also note that you should use `array_free` instead of calling `free()` yourself.
