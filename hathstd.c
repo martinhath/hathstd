@@ -45,6 +45,7 @@ List *list_push_back(List *list, void *val) {
 
 // Pops from the front
 void *list_pop(List *list) {
+    if (list_empty(list)) return NULL;
     Node *node = list->head;
     list->head = node->next;
     void *p = node->val;
@@ -55,6 +56,7 @@ void *list_pop(List *list) {
 }
 
 void *list_pop_back(List *list) {
+    if (list_empty(list)) return NULL;
     Node *node = list->head;
     Node *prev = node;
     while (node->next != NULL) {

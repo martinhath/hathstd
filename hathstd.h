@@ -24,6 +24,16 @@ int list_empty(List*);
 int list_contains(List*, void*, int (*cmp)(void*, void*));
 // End Linked List
 
+// Safe Array
+typedef void* _array[] Array;
+
+Array *array_create();
+
+void *array_get(size_t);
+int array_set(size_t, void*);
+
+// Safe array end
+
 
 
 // misc functions
