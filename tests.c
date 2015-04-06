@@ -17,6 +17,7 @@ void test_list_pop_empty();
 void test_array_add();
 void test_array_set();
 void test_array_get();
+void test_array_resize();
 
 
 int main() {
@@ -28,6 +29,7 @@ int main() {
     test_array_set();
     test_array_get();
     test_array_add();
+    test_array_resize();
 
     print_stats();
 }
@@ -81,6 +83,7 @@ void test_list_pop_empty() {
     true(1);
 }
 
+
 // end list
 
 void print(void *s) {
@@ -114,7 +117,37 @@ void test_array_add() {
     array_add(array, "is");
     array_add(array, "a");
     array_add(array, "test");
+    array_add(array, "lel");
+    array_add(array, "kek");
     array_foreach(array, print);
+    array_free(array);
+}
+
+void *square(void *a) {
+    size_t n = (size_t) a;
+    return (void*) (n*n);
+}
+
+void test_array_resize() {
+    Array *array = array_create();
+    for (size_t i = 0; i < 10; i++) {
+        array_add(array, (void*) i + 1);
+    }
+
+    printf("Printing numbers 1-10\n");
+    for (size_t i = 0; i < 10; i++){
+        size_t n = (size_t) array_get(array, i);
+        printf("%zu ", n);
+    }
+    printf("\n");
+
+    Array *squares = array_map(array, square);
+    printf("Printing squares 1-10\n");
+    for (size_t i = 0; i < 10; i++)
+        printf("%zu ", (size_t) array_get(squares, i));
+
+    printf("\n");
+    array_free(squares);
     array_free(array);
 }
 

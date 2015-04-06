@@ -40,6 +40,8 @@ int array_set(Array*, size_t, void*);
 int array_add(Array*, void*);
 
 void array_foreach(Array*, void (*f)(void*));
+Array *array_map(Array*, void* (*f)(void*));
+
 size_t array_size(Array*);
 
 // TODO:

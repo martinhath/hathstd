@@ -104,6 +104,7 @@ void list_foreach(List* list, void (*function)(void*)) {
 
 // Safe Array
 static void array_resize(Array*);
+static void array_resize_to(Array*, size_t);
 static int array_check_size(Array*, size_t);
 
 Array *array_create(void) {
@@ -143,6 +144,18 @@ void array_foreach(Array *array, void (*function)(void*)) {
     }
 }
 
+Array *array_map(Array *array, void* (*function)(void*)) {
+    size_t n = array_size(array);
+    Array *arr = array_create();
+    array_resize_to(arr, n);
+    for (size_t i = 0; i < n; i++) {
+        void *e = function(array_get(array, i));
+        array_add(arr, e);
+    }
+    return arr;
+}
+
+
 size_t array_size(Array *array) {
     return array->size;
 }
@@ -163,10 +176,22 @@ static int array_check_size(Array *array, size_t i) {
 
 static void array_resize(Array *array) {
     size_t cap = array->capacity * 1.5;
+    fprintf(stderr, "Resizing array at %p: %zu -> %zu\n",
+            array, array->capacity, cap);
     void **arr = emalloc(cap * sizeof(void*));
-    memmove(arr, array->array, array->size);
+    memmove(arr, array->array, array->size * sizeof(void*));
     free(array->array);
     array->array = arr;
+    array->capacity = cap;
+}
+
+static void array_resize_to(Array *array, size_t cap) {
+    void **arr = emalloc(cap * sizeof(void*));
+    memmove(arr, array->array, array->size * sizeof(void*));
+    free(array->array);
+    array->array = arr;
+    array->capacity = cap;
+
 }
 
 // End Safe Array
