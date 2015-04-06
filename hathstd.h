@@ -11,7 +11,7 @@ typedef struct List {
 
 
 List *list_create(void);
-void list_delete(List*, int);
+void list_free(List*, int);
 
 List *list_push(List*, void*);
 List *list_push_back(List*, void*);
@@ -25,12 +25,21 @@ int list_contains(List*, void*, int (*cmp)(void*, void*));
 // End Linked List
 
 // Safe Array
-typedef void* _array[] Array;
+typedef struct Array {
+    void ** array;
+    size_t capacity;
+    size_t size;
+} Array;
 
 Array *array_create();
 
-void *array_get(size_t);
-int array_set(size_t, void*);
+void *array_get(Array*, size_t);
+int array_set(Array*, size_t, void*);
+int array_add(Array*, void*);
+
+void array_map(Array*, void (*f)(void*));
+
+void array_free(Array*);
 
 // Safe array end
 
