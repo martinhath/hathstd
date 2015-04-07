@@ -5,7 +5,7 @@ LINK = -L$(shell pwd)/ -lhathstd -Wl,-rpath=$(shell pwd)/
 LIB_SRC = hathstd.c array.c list.c
 LIB_FLAGS = -fPIC
 
-test: lib
+test: lib-debug
 	$(CC) $(FLAGS) $(LINK) tests.c -o test
 
 test-run: test
@@ -15,6 +15,11 @@ test-run: test
 lib: 
 	$(CC) $(FLAGS) $(LIB_FLAGS) $(LIB_SRC) -c
 	gcc -shared -Wl,-soname,libhathstd.so -o libhathstd.so *.o
+
+lib-debug:
+	$(CC) $(FLAGS) $(LIB_FLAGS) -DDEBUG $(LIB_SRC) -c
+	gcc -shared -Wl,-soname,libhathstd.so -o libhathstd.so *.o
+
 
 install: lib
 	sudo cp libhathstd.so /usr/lib/
