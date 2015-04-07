@@ -6,7 +6,7 @@ LIB_SRC = hathstd.c array.c list.c hashmap.c
 LIB_FLAGS = -fPIC
 
 test: lib-debug
-	$(CC) $(FLAGS) $(LINK) tests.c -o test
+	$(CC) $(FLAGS) $(LINK) -DDEBUG tests.c -o test
 
 test-run: test
 	@echo -e "\n############\n# Running: #\n############\n"

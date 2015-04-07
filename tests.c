@@ -7,12 +7,15 @@
 void true(int a);
 void eq(int a, int b);
 void print_stats();
+void print(void*);
+void println(void*);
 
 // tests
 void test_list_push();
 void test_list_pop_back();
 void test_list_empty();
 void test_list_pop_empty();
+void test_list_delete();
 
 void test_array_add();
 void test_array_set();
@@ -29,6 +32,7 @@ int main() {
     test_list_pop_back();
     test_list_empty();
     test_list_pop_empty();
+    test_list_delete();
 
     printf("\n~~~ Testing Array ~~~\n");
     test_array_set();
@@ -44,6 +48,9 @@ int main() {
 }
 
 void test_list_push() {
+#ifdef DEBUG
+    printf("test_list_push()\n");
+#endif
     List *list = list_create();
     list_push(list, "martin");
     list_push(list, "er");
@@ -61,6 +68,9 @@ void test_list_push() {
 }
 
 void test_list_pop_back() {
+#ifdef DEBUG
+    printf("test_list_pop_back()\n");
+#endif
     List *list = list_create();
     list_push(list, "martin");
     list_push(list, "er");
@@ -75,6 +85,9 @@ void test_list_pop_back() {
 }
 
 void test_list_empty() {
+#ifdef DEBUG
+    printf("test_list_empty()\n");
+#endif
     List *list = list_create();
     list_push(list, "halla");
     true(!list_empty(list));
@@ -84,12 +97,34 @@ void test_list_empty() {
 }
 
 void test_list_pop_empty() {
+#ifdef DEBUG
+    printf("test_list_pop_empty()\n");
+#endif
     List *list = list_create();
     list_push(list, "tom");
     list_pop(list);
     list_pop(list);
     list_free(list);
     true(1);
+}
+
+int streq(void *s, void *t) {
+    return strcmp(s, t) == 0;
+}
+
+void test_list_delete() {
+#ifdef DEBUG
+    printf("test_list_delete()\n");
+#endif
+    List *list = list_create();
+    list_push(list, "martin");
+    list_push(list, "er");
+    list_push(list, "kul");
+#ifdef DEBUG
+    list_foreach(list, print);
+#endif
+    true(strcmp(list_delete(list, "er", streq), "er") == 0);
+    list_free(list);
 }
 
 
@@ -202,9 +237,9 @@ int key_cmp(void *s1, void *s2) {
 
 void test_hashmap() {
     HashMap *hashmap = hashmap_create(int_hash, key_cmp);
-    true(hashmap_insert(hashmap, (void*) 100, "martin"));
-    true(hashmap_insert(hashmap, (void*) 1124, "er"));
-    true(hashmap_insert(hashmap, (void*) 2148, "kul"));
+    true(hashmap_set(hashmap, (void*) 100, "martin"));
+    true(hashmap_set(hashmap, (void*) 1124, "er"));
+    true(hashmap_set(hashmap, (void*) 2148, "kul"));
 
     char *str;
     str = hashmap_get(hashmap, (void*) 100);

@@ -19,6 +19,8 @@ List *list_push_back(List*, void*);
 void *list_pop(List*);
 void *list_pop_back(List*);
 
+void *list_delete(List*, void*, int (*cmp)(void*, void*));
+
 void list_foreach(List*, void (*f)(void*));
 
 int list_empty(List*);
@@ -68,8 +70,11 @@ typedef struct HashNode {
 #define _HASHMAP_CAP 1024
 
 HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*));
-int hashmap_insert(HashMap*, void*, void*);
+
+int hashmap_set(HashMap*, void*, void*);
 void *hashmap_get(HashMap*, void*);
+
+void *hashmap_delete(HashMap*, void*);
 
 
 

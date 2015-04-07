@@ -69,6 +69,20 @@ void *list_pop_back(List *list) {
     return val;
 }
 
+void *list_delete(List *list, void *elem, int (*cmp)(void*, void*)) {
+    Node *node = list->head;
+    Node *prev = node;
+    while (node != NULL) {
+        if (cmp(elem, node->val)) {
+            prev->next = node->next;
+            return node->val;
+        }
+        prev = node;
+        node = node->next;
+    }
+    return NULL;
+}
+
 size_t list_size(List *list) {
     size_t c = 0;
     Node *node = list->head;
@@ -95,6 +109,6 @@ int list_contains(List* list, void *elem, int (*cmp)(void *a, void*b)) {
 
 void list_foreach(List* list, void (*function)(void*)) {
     for (Node *node = list->head; node != NULL; node = node->next)
-        function(node);
+        function(node->val);
 }
 // End Linked List

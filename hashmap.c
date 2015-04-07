@@ -16,7 +16,7 @@ HashMap *hashmap_create(size_t (*hash)(void*),
     return hashmap;
 }
 
-int hashmap_insert(HashMap *hashmap, void *key, void *val) {
+int hashmap_set(HashMap *hashmap, void *key, void *val) {
     size_t i = hashmap->hash(key);
     List *list = hashmap->array[i];
     if (list == NULL) {
@@ -33,7 +33,7 @@ int hashmap_insert(HashMap *hashmap, void *key, void *val) {
 void *hashmap_get(HashMap *hashmap, void *key) {
     size_t i = hashmap->hash(key);
     List *list = hashmap->array[i];
-    // :(  
+    // :(
     Node *node = list->head;
     while (node != NULL) {
         HashNode* hn = (HashNode*) node->val;
@@ -43,6 +43,15 @@ void *hashmap_get(HashMap *hashmap, void *key) {
         node = node->next;
     }
     return NULL;
+}
+
+void *hashmap_delete(HashMap *hashmap, void *key) {
+    size_t i = hashmap->hash(key);
+    List *list = hashmap->array[i];
+    if (list == NULL){
+        return NULL;
+    }
+    return list_delete(list, key, hashmap->keycmp);
 }
 
 static int hashnode_cmp(void *h1, void *h2) {
