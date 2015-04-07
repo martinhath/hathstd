@@ -78,7 +78,7 @@ void *hashmap_get(HashMap*, void*);
 void *hashmap_delete(HashMap*, void*);
 
 size_t hashmap_size(HashMap*);
-
+// HashMap End
 
 
 // misc functions

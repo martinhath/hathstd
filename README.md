@@ -11,7 +11,19 @@ In any case, I've decided to write a little library for myself, containing stuff
 
 ### `List`
 
-TODO: write 
+| Function name | description | 
+|---------------|-------------|
+| `List *list_create(void)` | Creates a new list |
+| `void list_free(List*)` | Frees the list |
+| `List *list_push(List*, void*)` | Adds the element at the front of the list |
+| `List *list_push_back(List*, void*)` | Adds the elements at the back of the list |
+| `void *list_pop(List*)` | Pops the first element of the list |
+| `void *list_pop_back(List*)` | Pops the last element of the list |
+| `void *list_delete(List*, void*, int (*cmp)(void*, void*))` | Deletes all elements a such that `cmp(elem, a)` is `true` |
+| `void list_foreach(List*, void (*f)(void*))` | Calls `f(e)` on every element in the list |
+| `int list_empty(List*)` | Returns wether the list is empty |
+| `size_t list_size(List*)` | Returns the size of the list |
+| `int list_contains(List*, void*, int (*cmp)(void*, void*)` | Returns wether the list contains a element such that `cmp(elem, e)` is `true`. |
 
 ### `Array`
 
@@ -32,3 +44,14 @@ There are also some convenient funcions, such as `array_clone`, `array_foreach`.
 | `Array *array_map(Array*, void *(*f)(void*))` | Creates a new array where each element is `e=f(a)` for all `a` in the given array |
 
 Note the difference between `foreach` and `map`. Also note that you should use `array_free()` instead of calling `free()` yourself.
+
+### `HashMap`
+
+| Function name | description | 
+|---------------|-------------|
+| `HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*))` | Creates a new hashmap. The first function is the hashing function, which takes a key. The second function is a key compare function |
+| `void hashmap_free(HashMap*)` | Frees the hashmap |
+| `int hashmap_set(HashMap*, void*, void*)` | set (key, value). Returns 0 on failure |
+| `void *hashmap_get(HashMap*, void*)` | Gets the value with the supplied key |
+| `void *hashmap_delete(HashMap*, void*)` | Deletes the item with the supplied key |
+| `size_t hashmap_size(HashMap*)` | Returns the number of elements in the map |
