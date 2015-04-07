@@ -70,11 +70,14 @@ typedef struct HashNode {
 #define _HASHMAP_CAP 1024
 
 HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*));
+void hashmap_free(HashMap*);
 
 int hashmap_set(HashMap*, void*, void*);
 void *hashmap_get(HashMap*, void*);
 
 void *hashmap_delete(HashMap*, void*);
+
+size_t hashmap_size(HashMap*);
 
 
 

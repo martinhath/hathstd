@@ -25,6 +25,7 @@ void test_array_clone();
 
 void test_hashmap();
 void test_hashmap_delete();
+void test_hashmap_size();
 
 
 int main() {
@@ -45,6 +46,7 @@ int main() {
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
     test_hashmap_delete();
+    test_hashmap_size();
 
     print_stats();
 }
@@ -258,6 +260,8 @@ void test_hashmap() {
     true(strcmp(str, "er") == 0);
     str = hashmap_get(hashmap, (void*) 2148);
     true(strcmp(str, "kul") == 0);
+
+    hashmap_free(hashmap);
 }
 
 void test_hashmap_delete() {
@@ -267,11 +271,36 @@ void test_hashmap_delete() {
     HashMap *hashmap = hashmap_create(int_hash, key_cmp);
     hashmap_set(hashmap, (void*) 12, "thoresen");
     hashmap_set(hashmap, (void*) 2, "martin");
-    char *str = hashmap_delete(hashmap, (void*) 12);
+    char *str;
+
+    str = hashmap_delete(hashmap, (void*) 12);
     true(str != NULL);
     true(strcmp(str, "thoresen") == 0);
-    char *s = hashmap_get(hashmap, (void*) 12);
-    true(s == NULL);
+
+    str = hashmap_get(hashmap, (void*) 12);
+    true(str == NULL);
+
+    str = hashmap_delete(hashmap, (void*) 12);
+    true(str == NULL);
+}
+
+void test_hashmap_size() {
+    HashMap *hashmap = hashmap_create(int_hash, key_cmp);
+    hashmap_set(hashmap, (void*) 0, "a");
+    hashmap_set(hashmap, (void*) 1, "b");
+    hashmap_set(hashmap, (void*) 2, "c");
+    hashmap_set(hashmap, (void*) 3, "d");
+    hashmap_set(hashmap, (void*) 4, "e");
+    true(hashmap_size(hashmap) == 5);
+
+    hashmap_delete(hashmap, (void*) 2);
+    hashmap_delete(hashmap, (void*) 4);
+    true(hashmap_size(hashmap) == 3);
+
+    hashmap_delete(hashmap, (void*) 0);
+    hashmap_delete(hashmap, (void*) 1);
+    hashmap_delete(hashmap, (void*) 3);
+    true(hashmap_size(hashmap) == 0);
 }
 // END HashMap
 

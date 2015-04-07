@@ -67,6 +67,26 @@ void *hashmap_delete(HashMap *hashmap, void *key) {
     return NULL;
 }
 
+size_t hashmap_size(HashMap *hashmap) {
+    size_t size = 0;
+    for (size_t i = 0; i < _HASHMAP_CAP; i++) {
+        List *list = hashmap->array[i];
+        if (list != NULL) {
+            size += list_size(list);
+        }
+    }
+    return size;
+}
+
+void hashmap_free(HashMap *hashmap) {
+    for (size_t i = 0; i < _HASHMAP_CAP; i++) {
+        List *list = hashmap->array[i];
+        if (list != NULL) {
+            list_free(list);
+        }
+    }
+}
+
 static int hashnode_cmp(void *h1, void *h2) {
     HashNode *hn1 = (HashNode*) h1;
     HashNode *hn2 = (HashNode*) h2;
