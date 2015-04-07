@@ -97,5 +97,4 @@ void list_foreach(List* list, void (*function)(void*)) {
     for (Node *node = list->head; node != NULL; node = node->next)
         function(node);
 }
-
 // End Linked List

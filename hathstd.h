@@ -53,6 +53,24 @@ void array_free(Array*);
 
 // Safe array end
 
+// HashMap begin
+typedef struct HashMap {
+    List **array;
+    size_t (*hash)(void*);
+    int (*keycmp)(void*, void*);
+} HashMap;
+
+typedef struct HashNode {
+    void *key;
+    void *val;
+} HashNode;
+
+#define _HASHMAP_CAP 1024
+
+HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*));
+int hashmap_insert(HashMap*, void*, void*);
+void *hashmap_get(HashMap*, void*);
+
 
 
 // misc functions

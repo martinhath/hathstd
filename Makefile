@@ -2,7 +2,7 @@ CC=clang
 FLAGS= -g -O2 -Wall
 LINK = -L$(shell pwd)/ -lhathstd -Wl,-rpath=$(shell pwd)/
 
-LIB_SRC = hathstd.c array.c list.c
+LIB_SRC = hathstd.c array.c list.c hashmap.c
 LIB_FLAGS = -fPIC
 
 test: lib-debug

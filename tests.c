@@ -20,18 +20,25 @@ void test_array_get();
 void test_array_resize();
 void test_array_clone();
 
+void test_hashmap();
+
 
 int main() {
+    printf("\n~~~ Testing List ~~~\n");
     test_list_push();
     test_list_pop_back();
     test_list_empty();
     test_list_pop_empty();
 
+    printf("\n~~~ Testing Array ~~~\n");
     test_array_set();
     test_array_get();
     test_array_add();
     test_array_resize();
     test_array_clone();
+
+    printf("\n~~~ Testing HashMap ~~~\n");
+    test_hashmap();
 
     print_stats();
 }
@@ -183,6 +190,31 @@ void test_array_clone() {
     true(res);
     printf("\n");
 }
+
+// HashMap
+size_t int_hash(void *i) {
+    return ((size_t) i) % 1024;
+}
+
+int key_cmp(void *s1, void *s2) {
+    return s1 == s2;
+}
+
+void test_hashmap() {
+    HashMap *hashmap = hashmap_create(int_hash, key_cmp);
+    true(hashmap_insert(hashmap, (void*) 100, "martin"));
+    true(hashmap_insert(hashmap, (void*) 1124, "er"));
+    true(hashmap_insert(hashmap, (void*) 2148, "kul"));
+
+    char *str;
+    str = hashmap_get(hashmap, (void*) 100);
+    true(strcmp(str, "martin") == 0);
+    str = hashmap_get(hashmap, (void*) 1124);
+    true(strcmp(str, "er") == 0);
+    str = hashmap_get(hashmap, (void*) 2148);
+    true(strcmp(str, "kul") == 0);
+}
+// END HashMap
 
 // Testing functions
 static size_t N;
