@@ -45,13 +45,26 @@ void *hashmap_get(HashMap *hashmap, void *key) {
     return NULL;
 }
 
+static int equals(void *a, void *b) {
+    return a == b;
+}
+
 void *hashmap_delete(HashMap *hashmap, void *key) {
     size_t i = hashmap->hash(key);
     List *list = hashmap->array[i];
     if (list == NULL){
         return NULL;
     }
-    return list_delete(list, key, hashmap->keycmp);
+    Node *node = list->head;
+    while (node != NULL) {
+        HashNode* hn = (HashNode*) node->val;
+        if (hashmap->keycmp(key, hn->key)) {
+            list_delete(list, hn, equals);
+            return hn->val;
+        }
+        node = node->next;
+    }
+    return NULL;
 }
 
 static int hashnode_cmp(void *h1, void *h2) {

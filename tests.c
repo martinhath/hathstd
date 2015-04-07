@@ -24,6 +24,7 @@ void test_array_resize();
 void test_array_clone();
 
 void test_hashmap();
+void test_hashmap_delete();
 
 
 int main() {
@@ -43,6 +44,7 @@ int main() {
 
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
+    test_hashmap_delete();
 
     print_stats();
 }
@@ -122,8 +124,13 @@ void test_list_delete() {
     list_push(list, "kul");
 #ifdef DEBUG
     list_foreach(list, print);
+    printf("\n");
 #endif
     true(strcmp(list_delete(list, "er", streq), "er") == 0);
+#ifdef DEBUG
+    list_foreach(list, print);
+    printf("\n");
+#endif
     list_free(list);
 }
 
@@ -236,6 +243,9 @@ int key_cmp(void *s1, void *s2) {
 }
 
 void test_hashmap() {
+#ifdef DEBUG
+    printf("test_hashmap()\n");
+#endif
     HashMap *hashmap = hashmap_create(int_hash, key_cmp);
     true(hashmap_set(hashmap, (void*) 100, "martin"));
     true(hashmap_set(hashmap, (void*) 1124, "er"));
@@ -248,6 +258,20 @@ void test_hashmap() {
     true(strcmp(str, "er") == 0);
     str = hashmap_get(hashmap, (void*) 2148);
     true(strcmp(str, "kul") == 0);
+}
+
+void test_hashmap_delete() {
+#ifdef DEBUG
+    printf("test_hashmap_delete()\n");
+#endif
+    HashMap *hashmap = hashmap_create(int_hash, key_cmp);
+    hashmap_set(hashmap, (void*) 12, "thoresen");
+    hashmap_set(hashmap, (void*) 2, "martin");
+    char *str = hashmap_delete(hashmap, (void*) 12);
+    true(str != NULL);
+    true(strcmp(str, "thoresen") == 0);
+    char *s = hashmap_get(hashmap, (void*) 12);
+    true(s == NULL);
 }
 // END HashMap
 
