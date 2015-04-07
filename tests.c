@@ -24,6 +24,7 @@ void test_array_resize();
 void test_array_clone();
 
 void test_hashmap();
+void test_hashmap_str_str();
 void test_hashmap_delete();
 void test_hashmap_size();
 
@@ -45,6 +46,7 @@ int main() {
 
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
+    test_hashmap_str_str();
     test_hashmap_delete();
     test_hashmap_size();
 
@@ -262,6 +264,28 @@ void test_hashmap() {
     true(strcmp(str, "kul") == 0);
 
     hashmap_free(hashmap);
+}
+
+static size_t str_hash(void *p) {
+    size_t hash = 0;
+    char *str = p;
+    char c;
+    while((c = *str++) != '\0') {
+        hash += c * 0xbabe;
+    }
+    return hash % _HASHMAP_CAP;
+}
+
+void test_hashmap_str_str() {
+    HashMap *hashmap = hashmap_create(str_hash, streq);
+    hashmap_set(hashmap, "martin", "kul");
+    hashmap_set(hashmap, "webkom", "top kek");
+
+    char *str;
+    str = hashmap_get(hashmap, "martin");
+    true(strcmp(str, "kul") == 0);
+    str = hashmap_get(hashmap, "webkom");
+    true(strcmp(str, "top kek") == 0);
 }
 
 void test_hashmap_delete() {
