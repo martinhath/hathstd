@@ -16,5 +16,9 @@ lib:
 	$(CC) $(FLAGS) $(LIB_FLAGS) $(LIB_SRC) -c
 	gcc -shared -Wl,-soname,libhathstd.so -o libhathstd.so *.o
 
+install: lib
+	sudo cp libhathstd.so /usr/lib/
+	sudo cp hathstd.h /usr/include/
+
 clean:
 	rm *.o *.so test
