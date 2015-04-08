@@ -7,6 +7,49 @@ In any case, I've decided to write a little library for myself, containing stuff
 
  - For all functions that returns an `int` for errors, zero is failure.
 
+## Usage
+
+The following sample program should build, and run correctly.
+
+```c
+// sample.c
+#include <hathstd.h>
+#include <stdio.h>
+
+void print(void*);
+
+int main() {
+    Array *array = array_create();
+    array_add(array, "hath");
+    array_add(array, "std");
+    array_add(array, "just");
+    array_add(array, "werks!");
+    array_foreach(array, print);
+    printf("\n");
+    return 0;
+}
+
+void print(void *s) {
+    printf("%s ", s);
+}
+```
+
+Compile with 
+
+```bash
+clang -lhathstd sample.c -o sample
+./sample // "hath std just werks!"
+```
+
+### Installation
+
+Simply run
+
+```bash
+make
+make install
+```
+
 ## Containers
 
 ### `List`
