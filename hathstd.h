@@ -48,9 +48,11 @@ Array *array_map(Array*, void* (*f)(void*));
 
 size_t array_size(Array*);
 
+int array_contains(Array*, void*, int (*cmp)(void*, void*));
+
+void *array_delete(Array*, size_t);
+
 // TODO:
-// int array_contains(Array*, void*, int (*cmp)(void*, void*));
-// void *array_pop(size_t);
 void array_free(Array*);
 
 // Safe array end

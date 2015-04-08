@@ -21,6 +21,8 @@ void test_array_add();
 void test_array_set();
 void test_array_get();
 void test_array_resize();
+void test_array_delete();
+void test_array_contains();
 void test_array_clone();
 
 void test_hashmap();
@@ -43,6 +45,8 @@ int main() {
     test_array_get();
     test_array_add();
     test_array_resize();
+    test_array_delete();
+    test_array_contains();
     test_array_clone();
 
     printf("\n~~~ Testing HashMap ~~~\n");
@@ -205,6 +209,38 @@ void test_array_resize() {
 
     printf("\n");
     array_free(squares);
+    array_free(array);
+}
+
+void printsizet(void *n) {
+    printf("%zu ", (size_t) n);
+}
+
+void test_array_delete() {
+    Array *array = array_create();
+    for (size_t i = 0; i < 10; i++) {
+        array_add(array, (void*) i + 1);
+    }
+
+    printf("Printing numbers 1-10\n");
+    array_foreach(array, printsizet);
+    size_t i = 5;
+    printf("\nRemoving element 5\n");
+    array_delete(array, i);
+    printf("Printing the remaining elements:\n");
+    array_foreach(array, printsizet);
+    printf("\n");
+    array_free(array);
+}
+
+void test_array_contains() {
+    Array *array = array_create();
+    array_add(array, "martin");
+    array_add(array, "er");
+    array_add(array, "veldig");
+    array_add(array, "kul");
+    true(array_contains(array, "veldig", streq));
+    true(!array_contains(array, "thoresen", streq));
     array_free(array);
 }
 

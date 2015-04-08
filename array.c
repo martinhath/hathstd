@@ -39,6 +39,23 @@ int array_add(Array *array, void *elem) {
     return 1;
 }
 
+void *array_delete(Array *array, size_t i) {
+    if (!array_check_size(array, i))
+        return NULL;
+    void *elem = array->array[i];
+    memmove(array->array + i, array->array + i + 1, (array->size - i - 1) * sizeof(void*));
+    array->size--;
+    return elem;
+}
+
+
+int array_contains(Array *array, void* elem, int (*cmp)(void*, void*)) {
+    for (size_t i = 0; i < array->size; i++)
+        if (cmp(elem, array->array[i]))
+            return 1;
+    return 0;
+}
+
 Array *array_clone(Array *array) {
     Array *arr = array_create();
     array_resize_to(arr, array->size);

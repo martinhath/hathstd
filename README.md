@@ -42,7 +42,7 @@ There are also some convenient funcions, such as `array_clone`, `array_foreach`.
 | `Array *array_clone(Array*)` | Clones the array, returning a new. The `void*` are only copied, meaning they will point to the same data as the original array | O(n) |
 | `void array_foreach(Array*, void (*f)(void*))` | Runs the given function on all members of the array | O(n) |
 | `Array *array_map(Array*, void *(*f)(void*))` | Creates a new array where each element is `e=f(a)` for all `a` in the given array | O(n) |
- O(n) |
+
 Note the difference between `foreach` and `map`. Also note that you should use `array_free()` instead of calling `free()` yourself.
 
 ### `HashMap`
