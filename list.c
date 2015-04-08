@@ -11,9 +11,9 @@ List *list_create(void) {
 }
 
 void list_free(List* list) {
-    Node *n = list->head;
+    ListNode *n = list->head;
     while (n != NULL) {
-        Node *tmp = n->next;
+        ListNode *tmp = n->next;
         free(n);
         n = tmp;
     }
@@ -22,8 +22,8 @@ void list_free(List* list) {
 
 // Pushed to the front
 List *list_push(List *list, void *val) {
-    Node *node = emalloc(sizeof(Node));
-    Node *snd = list->head;
+    ListNode *node = emalloc(sizeof(ListNode));
+    ListNode *snd = list->head;
     list->head = node;
     node->next = snd;
     node->val = val;
@@ -34,10 +34,10 @@ List *list_push(List *list, void *val) {
 List *list_push_back(List *list, void *val) {
     if (list_empty(list))
         return list_push(list, val);
-    Node *n = list->head;
+    ListNode *n = list->head;
     while (n->next != NULL)
         n = n->next;
-    Node *node = emalloc(sizeof(Node));
+    ListNode *node = emalloc(sizeof(ListNode));
     node->val = val;
     node->next = NULL;
     n->next = node;
@@ -47,7 +47,7 @@ List *list_push_back(List *list, void *val) {
 // Pops from the front
 void *list_pop(List *list) {
     if (list_empty(list)) return NULL;
-    Node *node = list->head;
+    ListNode *node = list->head;
     list->head = node->next;
     void *p = node->val;
     if (node == list->head)
@@ -58,8 +58,8 @@ void *list_pop(List *list) {
 
 void *list_pop_back(List *list) {
     if (list_empty(list)) return NULL;
-    Node *node = list->head;
-    Node *prev = node;
+    ListNode *node = list->head;
+    ListNode *prev = node;
     while (node->next != NULL) {
         prev = node;
         node = node->next;
@@ -73,8 +73,8 @@ void *list_pop_back(List *list) {
 }
 
 void *list_delete(List *list, void *elem, int (*cmp)(void*, void*)) {
-    Node *node = list->head;
-    Node *prev = node;
+    ListNode *node = list->head;
+    ListNode *prev = node;
     while (node != NULL) {
         if (cmp(elem, node->val)) {
             prev->next = node->next;
@@ -90,7 +90,7 @@ void *list_delete(List *list, void *elem, int (*cmp)(void*, void*)) {
 
 size_t list_size(List *list) {
     size_t c = 0;
-    Node *node = list->head;
+    ListNode *node = list->head;
     while (node != NULL){
         node = node->next;
         c++;
@@ -103,7 +103,7 @@ int list_empty(List *list) {
 }
 
 int list_contains(List* list, void *elem, int (*cmp)(void *a, void*b)) {
-    Node *node = list->head;
+    ListNode *node = list->head;
     while (node != NULL) {
         if (cmp(elem, node->val))
             return 1;
@@ -113,7 +113,7 @@ int list_contains(List* list, void *elem, int (*cmp)(void *a, void*b)) {
 }
 
 void list_foreach(List* list, void (*function)(void*)) {
-    for (Node *node = list->head; node != NULL; node = node->next)
+    for (ListNode *node = list->head; node != NULL; node = node->next)
         function(node->val);
 }
 // End Linked List

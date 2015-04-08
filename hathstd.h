@@ -1,12 +1,12 @@
 #include <stddef.h>
 
 // Linked List implementation
-typedef struct Node {
-    struct Node *next;
+typedef struct ListNode {
+    struct ListNode *next;
     void *val;
-} Node;
+} ListNode;
 typedef struct List {
-    Node *head;
+    ListNode *head;
 } List;
 
 

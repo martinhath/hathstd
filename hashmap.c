@@ -32,7 +32,7 @@ void *hashmap_get(HashMap *hashmap, void *key) {
     size_t i = hashmap->hash(key);
     List *list = hashmap->array[i];
     // Bad - uses the internals of List
-    Node *node = list->head;
+    ListNode *node = list->head;
     while (node != NULL) {
         HashNode* hn = (HashNode*) node->val;
         if (hashmap->keycmp(key, hn->key)) {
@@ -54,7 +54,7 @@ void *hashmap_delete(HashMap *hashmap, void *key) {
         return NULL;
     }
     // Bad - uses the internals of List
-    Node *node = list->head;
+    ListNode *node = list->head;
     while (node != NULL) {
         HashNode* hn = (HashNode*) node->val;
         if (hashmap->keycmp(key, hn->key)) {
@@ -77,14 +77,14 @@ size_t hashmap_size(HashMap *hashmap) {
     return size;
 }
 
-// Return List or Array?
 List *hashmap_keys(HashMap* hashmap) {
     List *keys = list_create();
     for (size_t j = 0; j < _HASHMAP_CAP; j++) {
         List *list = hashmap->array[j];
         if (list == NULL)
             continue;
-        Node *node = list->head;
+        // Bad - uses the internals of List
+        ListNode *node = list->head;
         while (node != NULL) {
             HashNode *hn = (HashNode*) node->val;
             list_push(keys, hn->key);
