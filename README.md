@@ -55,3 +55,5 @@ Note the difference between `foreach` and `map`. Also note that you should use `
 | `void *hashmap_get(HashMap*, void*)` | Gets the value with the supplied key | O(1) |
 | `void *hashmap_delete(HashMap*, void*)` | Deletes the item with the supplied key | O(1) |
 | `size_t hashmap_size(HashMap*)` | Returns the number of elements in the map | O(n) |
+| `List *hashmap_keys(HashMap*)` | Returns a `List` with all the keys in the HashMap | O(n) |
+
