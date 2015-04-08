@@ -18,22 +18,29 @@ Tree *tree_create(int (*cmp)(void*, void*)) {
     return tree;
 }
 
-#include <stdio.h>
-void tree_foreach(Tree *tree, void (*function)(void*)) {
-    // infix
-    List *stack = list_create();
+int tree_contains(Tree *tree, void *elem) {
     TreeNode *node = tree->root;
     while (node != NULL) {
-        if (node->left != NULL) {
-            list_push(stack, node);
-            node = node->left;
-        } else if (node->right != NULL) {
-            printf("data: %s\n", node->data);
-            function(node->data);
-            node = node->right;
-        } else
-            node = list_pop(stack);
+        int r = tree->cmp(elem, node->data);
+        if (r == 0) return 1;
+        else if (r < 0) node = node->left;
+        else node = node->right;
     }
+    return 0;
+}
+
+static void tree_foreach_rec(TreeNode*, void (*function)(void*));
+
+void tree_foreach(Tree *tree, void (*function)(void*)) {
+    tree_foreach_rec(tree->root, function);
+}
+
+static void tree_foreach_rec(TreeNode *node, void (*function)(void*)) {
+    if (node == NULL)
+        return;
+    tree_foreach_rec(node->left, function);
+    function(node->data);
+    tree_foreach_rec(node->right, function);
 }
 
 int tree_insert(Tree *tree, void *elem) {
@@ -63,9 +70,8 @@ int tree_insert(Tree *tree, void *elem) {
 }
 
 static void tree_insert_fixup(Tree *tree, TreeNode *z) {
-    if (z->parent->parent == NULL)
-        return;
-    while (z->parent != NULL && z->parent->color == RB_RED) {
+    while (z->parent != NULL && z->parent->parent != NULL &&
+            z->parent->color == RB_RED) {
         if (z->parent == z->parent->parent->left) {
             TreeNode *y = z->parent->parent->right;
             if (y != NULL && y->color == RB_RED) {

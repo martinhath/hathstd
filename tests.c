@@ -38,6 +38,7 @@ void test_hashmap_size();
 void test_hashmap_keys();
 
 void test_tree();
+void test_tree_contains();
 
 
 int main() {
@@ -69,6 +70,7 @@ int main() {
 
     printf("\n~~~ Testing Tree ~~~\n");
     test_tree();
+    test_tree_contains();
 
     print_stats();
 }
@@ -427,15 +429,29 @@ void test_hashmap_keys() {
 void test_tree() {
     Tree *tree = tree_create(streq);
 
-    printf("lel\n");
     tree_insert(tree, "martin");
-    printf("lel\n");
     tree_insert(tree, "ord");
     tree_insert(tree, "ting");
     tree_insert(tree, "lelel");
-    printf("lel\n");
+}
 
-    tree_foreach(tree, print);
+int strcmp2(void *s, void *t) {
+    return strcmp((char*) s, (char*) t);
+}
+
+void test_tree_contains() {
+    Tree *tree = tree_create(strcmp2);
+    tree_insert(tree, "martin");
+    tree_insert(tree, "hath");
+    tree_insert(tree, "c");
+    tree_insert(tree, "ritchie");
+    tree_insert(tree, "rms");
+    tree_insert(tree, "torvalds");
+    tree_insert(tree, "knuth");
+
+    true(tree_contains(tree, "martin"));
+    true(tree_contains(tree, "rms"));
+    true(!tree_contains(tree, "kek"));
 }
 
 int cmp(void *a, void *b) {
