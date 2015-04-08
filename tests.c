@@ -11,9 +11,11 @@ void print(void*);
 void println(void*);
 
 int cmp(void*, void*);
+int streq(void*, void*);
 
 // tests
 void test_list_push();
+void test_list_push_back();
 void test_list_pop_back();
 void test_list_empty();
 void test_list_pop_empty();
@@ -38,6 +40,7 @@ void test_hashmap_keys();
 int main() {
     printf("\n~~~ Testing List ~~~\n");
     test_list_push();
+    test_list_push_back();
     test_list_pop_back();
     test_list_empty();
     test_list_pop_empty();
@@ -80,6 +83,16 @@ void test_list_push() {
     true(strcmp("er", list_pop(list)) == 0);
     true(strcmp("martin", list_pop(list)) == 0);
     true(list_size(list) == 0);
+    list_free(list);
+}
+
+void test_list_push_back() {
+    List *list = list_create();
+    list_push_back(list, "std");
+    list_push_back(list, "c");
+    list_push_back(list, "kek");
+    true(list_size(list) == 3);
+    true(list_contains(list, "c", streq));
     list_free(list);
 }
 
@@ -170,12 +183,14 @@ void test_array_get() {
 
 void test_array_add() {
     Array *array = array_create();
-    true(array_add(array, "this"));
-    true(array_add(array, "is"));
-    true(array_add(array, "a"));
-    true(array_add(array, "test"));
-    true(array_add(array, "lel"));
-    true(array_add(array, "kek"));
+    int ret = 1;
+    ret &= array_add(array, "this");
+    ret &= array_add(array, "is");
+    ret &= array_add(array, "a");
+    ret &= array_add(array, "test");
+    ret &= array_add(array, "lel");
+    ret &= array_add(array, "kek");
+    true(ret == 1);
     array_free(array);
 }
 

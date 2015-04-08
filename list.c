@@ -32,11 +32,14 @@ List *list_push(List *list, void *val) {
 
 // Inserts at the back. Returns last element.
 List *list_push_back(List *list, void *val) {
+    if (list_empty(list))
+        return list_push(list, val);
     Node *n = list->head;
     while (n->next != NULL)
         n = n->next;
     Node *node = emalloc(sizeof(Node));
     node->val = val;
+    node->next = NULL;
     n->next = node;
     return list;
 }
