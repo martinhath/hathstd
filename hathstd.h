@@ -81,7 +81,7 @@ void *hashmap_delete(HashMap*, void*);
 
 size_t hashmap_size(HashMap*);
 
-void **hashmap_keys(HashMap*);
+List *hashmap_keys(HashMap*);
 // HashMap End
 
 

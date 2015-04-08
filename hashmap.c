@@ -77,12 +77,9 @@ size_t hashmap_size(HashMap *hashmap) {
     return size;
 }
 
-void **hashmap_keys(HashMap* hashmap) {
-    // this is not so good, as it forces the caller
-    // to call hashmap_size, as well as we do it here..
-    size_t n = hashmap_size(hashmap);
-    void **keys = emalloc(n * sizeof(void*));
-    size_t i = 0;
+// Return List or Array?
+List *hashmap_keys(HashMap* hashmap) {
+    List *keys = list_create();
     for (size_t j = 0; j < _HASHMAP_CAP; j++) {
         List *list = hashmap->array[j];
         if (list == NULL)
@@ -90,11 +87,10 @@ void **hashmap_keys(HashMap* hashmap) {
         Node *node = list->head;
         while (node != NULL) {
             HashNode *hn = (HashNode*) node->val;
-            keys[i++] = hn->key;
+            list_push(keys, hn->key);
             node = node->next;
         }
     }
-    printf("Found %zu keys\n", i);
     return keys;
 }
 

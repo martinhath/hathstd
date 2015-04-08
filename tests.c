@@ -388,12 +388,10 @@ void test_hashmap_keys() {
     hashmap_set(hashmap, (void*) 9001, "9001");
     hashmap_set(hashmap, (void*) 69, "lel");
 
-    void **keys = hashmap_keys(hashmap);
-    printf("Should print out [123, 9001, 69]:\n");
-    for (size_t i = 0; i < 3; i++) {
-        printf("%zu ", (size_t) keys[i]);
-    }
-    printf("\n");
+    List *keys = hashmap_keys(hashmap);
+    true(list_contains(keys, (void*) 69, key_cmp));
+    true(list_contains(keys, (void*) 123, key_cmp));
+    true(list_contains(keys, (void*) 9001, key_cmp));
     hashmap_free(hashmap);
 }
 
