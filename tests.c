@@ -10,6 +10,8 @@ void print_stats();
 void print(void*);
 void println(void*);
 
+int cmp(void*, void*);
+
 // tests
 void test_list_push();
 void test_list_pop_back();
@@ -20,7 +22,7 @@ void test_list_delete();
 void test_array_add();
 void test_array_set();
 void test_array_get();
-void test_array_resize();
+void test_array_map();
 void test_array_delete();
 void test_array_contains();
 void test_array_clone();
@@ -45,7 +47,7 @@ int main() {
     test_array_set();
     test_array_get();
     test_array_add();
-    test_array_resize();
+    test_array_map();
     test_array_delete();
     test_array_contains();
     test_array_clone();
@@ -134,15 +136,7 @@ void test_list_delete() {
     list_push(list, "martin");
     list_push(list, "er");
     list_push(list, "kul");
-#ifdef DEBUG
-    list_foreach(list, print);
-    printf("\n");
-#endif
     true(strcmp(list_delete(list, "er", streq), "er") == 0);
-#ifdef DEBUG
-    list_foreach(list, print);
-    printf("\n");
-#endif
     list_free(list);
 }
 
@@ -176,13 +170,12 @@ void test_array_get() {
 
 void test_array_add() {
     Array *array = array_create();
-    array_add(array, "this");
-    array_add(array, "is");
-    array_add(array, "a");
-    array_add(array, "test");
-    array_add(array, "lel");
-    array_add(array, "kek");
-    array_foreach(array, println);
+    true(array_add(array, "this"));
+    true(array_add(array, "is"));
+    true(array_add(array, "a"));
+    true(array_add(array, "test"));
+    true(array_add(array, "lel"));
+    true(array_add(array, "kek"));
     array_free(array);
 }
 
@@ -191,25 +184,20 @@ void *square(void *a) {
     return (void*) (n*n);
 }
 
-void test_array_resize() {
+void test_array_map() {
     Array *array = array_create();
     for (size_t i = 0; i < 10; i++) {
         array_add(array, (void*) i + 1);
     }
 
-    printf("Printing numbers 1-10\n");
-    for (size_t i = 0; i < 10; i++){
-        size_t n = (size_t) array_get(array, i);
-        printf("%zu ", n);
-    }
-    printf("\n");
-
     Array *squares = array_map(array, square);
-    printf("Printing squares 1-10\n");
-    for (size_t i = 0; i < 10; i++)
-        printf("%zu ", (size_t) array_get(squares, i));
 
-    printf("\n");
+    true(array_contains(squares, (void*) 81, cmp));
+    true(array_contains(squares, (void*) 100, cmp));
+    true(array_contains(squares, (void*) 49, cmp));
+    true(!array_contains(squares, (void*) 50, cmp));
+    true(!array_contains(squares, (void*) 30, cmp));
+
     array_free(squares);
     array_free(array);
 }
@@ -224,14 +212,9 @@ void test_array_delete() {
         array_add(array, (void*) i + 1);
     }
 
-    printf("Printing numbers 1-10\n");
-    array_foreach(array, printsizet);
     size_t i = 5;
-    printf("\nRemoving element 5\n");
-    array_delete(array, i);
-    printf("Printing the remaining elements:\n");
-    array_foreach(array, printsizet);
-    printf("\n");
+    void *e = array_delete(array, i);
+    true(!array_contains(array, e, cmp));
     array_free(array);
 }
 
@@ -258,14 +241,16 @@ void test_array_clone() {
     array_add(array, "fox");
     array_add(array, "jumped");
 
-    printf("Print out original:\n");
-    array_foreach(array, print);
-    printf("\n");
-
     Array *copy = array_clone(array);
 
-    printf("Print out copy:\n");
-    array_foreach(copy, print);
+    true(copy != array);
+    true(copy->array != array->array);
+    size_t n = array_size(array);
+    for (size_t i = 0; i < n; i++) {
+        char *str = array_get(array, i);
+        char *cpy = array_get(copy, i);
+        true(strcmp(str, cpy) == 0);
+    }
 
     int res = 0;
     for (size_t i = 0; i < 4; i++) {
@@ -396,6 +381,10 @@ void test_hashmap_keys() {
 }
 
 // END HashMap
+
+int cmp(void *a, void *b) {
+    return a==b;
+}
 
 // Testing functions
 static size_t N;

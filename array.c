@@ -10,7 +10,7 @@ static void array_resize_to(Array*, size_t);
 static int array_check_size(Array*, size_t);
 
 Array *array_create(void) {
-#define INIT_CAP 4
+#define INIT_CAP 1023
     Array *arr = emalloc(sizeof(Array));
     arr->capacity = INIT_CAP;
     arr->size = 0;
