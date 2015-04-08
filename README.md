@@ -54,7 +54,7 @@ make install
 
 ### `List`
 
-| Function name | description | Complexity | 
+| Function name | Description | Complexity | 
 |---------------|-------------|------------|
 | `List *list_create(void)` | Creates a new list | O(1) |
 | `void list_free(List*)` | Frees the list | O(n) |
@@ -75,7 +75,7 @@ The point of having a `Array` type is, well, it's convenient. The array is **saf
 The main point of this container is to not have to think about the size of the array, and related problems (resizing, for instance).
 There are also some convenient funcions, such as `array_clone`, `array_foreach`. and `array_map`.
 
-| Function name | description | Complexity | 
+| Function name | Description | Complexity | 
 |---------------|-------------|------------|
 | `Array *array_create(void)` | Creates a new array | O(1) |
 | `void array_free(Array*)` | Frees the array | O(n) |
@@ -91,7 +91,7 @@ Note the difference between `foreach` and `map`. Also note that you should use `
 
 ### `HashMap`
 
-| Function name | description | Complexity |  
+| Function name | Description | Complexity |  
 |---------------|-------------|------------|
 | `HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*))` | Creates a new hashmap. The first function is the hashing function, which takes a key. The second function is a key compare function | O(n) |
 | `void hashmap_free(HashMap*)` | Frees the hashmap | O(n) |
@@ -100,4 +100,13 @@ Note the difference between `foreach` and `map`. Also note that you should use `
 | `void *hashmap_delete(HashMap*, void*)` | Deletes the item with the supplied key | O(1) |
 | `size_t hashmap_size(HashMap*)` | Returns the number of elements in the map | O(n) |
 | `List *hashmap_keys(HashMap*)` | Returns a `List` with all the keys in the HashMap | O(n) |
+
+### `Tree`
+
+| Function name | Description | Complexity |
+|---------------|-------------|------------|
+| `Tree *tree_create(int (*cmp)(void*, void*))` | Creates a new tree. Takes a function that compares values you put in the tree. The funcion should return as `strcmp` does. | O(1) |
+| `int tree_contains(Tree*, void*)` | Returns `true` if the tree contains the given element. | O(lg n) |
+| `void tree_foreach(Tree*, void (*f)(void*))` | Runs the given function on all elements. | O(n) |
+| `int tree_insert(Tree*, void*)` | Insert the element into the tree | O(lg n) |
 
