@@ -30,6 +30,7 @@ void test_hashmap_update();
 void test_hashmap_str_str();
 void test_hashmap_delete();
 void test_hashmap_size();
+void test_hashmap_keys();
 
 
 int main() {
@@ -55,6 +56,7 @@ int main() {
     test_hashmap_str_str();
     test_hashmap_delete();
     test_hashmap_size();
+    test_hashmap_keys();
 
     print_stats();
 }
@@ -379,6 +381,22 @@ void test_hashmap_size() {
     hashmap_delete(hashmap, (void*) 3);
     true(hashmap_size(hashmap) == 0);
 }
+
+void test_hashmap_keys() {
+    HashMap *hashmap = hashmap_create(int_hash, key_cmp);
+    hashmap_set(hashmap, (void*) 123, "bæ");
+    hashmap_set(hashmap, (void*) 9001, "9001");
+    hashmap_set(hashmap, (void*) 69, "lel");
+
+    void **keys = hashmap_keys(hashmap);
+    printf("Should print out [123, 9001, 69]:\n");
+    for (size_t i = 0; i < 3; i++) {
+        printf("%zu ", (size_t) keys[i]);
+    }
+    printf("\n");
+    hashmap_free(hashmap);
+}
+
 // END HashMap
 
 // Testing functions

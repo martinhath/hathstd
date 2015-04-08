@@ -22,6 +22,7 @@ void *list_pop_back(List*);
 void *list_delete(List*, void*, int (*cmp)(void*, void*));
 
 void list_foreach(List*, void (*f)(void*));
+// TODO: list_map
 
 int list_empty(List*);
 size_t list_size(List*);
@@ -52,7 +53,6 @@ int array_contains(Array*, void*, int (*cmp)(void*, void*));
 
 void *array_delete(Array*, size_t);
 
-// TODO:
 void array_free(Array*);
 
 // Safe array end
@@ -80,6 +80,8 @@ void *hashmap_get(HashMap*, void*);
 void *hashmap_delete(HashMap*, void*);
 
 size_t hashmap_size(HashMap*);
+
+void **hashmap_keys(HashMap*);
 // HashMap End
 
 
