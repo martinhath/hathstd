@@ -1,8 +1,8 @@
 CC=clang
-FLAGS= -g -O2 -Wall
+FLAGS= -g  -Wall
 LINK = -L$(shell pwd)/ -lhathstd -Wl,-rpath=$(shell pwd)/
 
-LIB_SRC = hathstd.c array.c list.c hashmap.c
+LIB_SRC = hathstd.c array.c list.c hashmap.c tree.c
 LIB_FLAGS = -fPIC
 
 lib: 

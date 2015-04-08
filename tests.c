@@ -37,6 +37,8 @@ void test_hashmap_delete();
 void test_hashmap_size();
 void test_hashmap_keys();
 
+void test_tree();
+
 
 int main() {
     printf("\n~~~ Testing List ~~~\n");
@@ -64,6 +66,9 @@ int main() {
     test_hashmap_delete();
     test_hashmap_size();
     test_hashmap_keys();
+
+    printf("\n~~~ Testing Tree ~~~\n");
+    test_tree();
 
     print_stats();
 }
@@ -140,6 +145,8 @@ void test_list_pop_empty() {
 }
 
 int streq(void *s, void *t) {
+    if (s == NULL) return -1;
+    if (t == NULL) return 1;
     return strcmp(s, t) == 0;
 }
 
@@ -414,8 +421,22 @@ void test_hashmap_keys() {
     true(list_contains(keys, (void*) 9001, key_cmp));
     hashmap_free(hashmap);
 }
-
 // END HashMap
+// Tree
+
+void test_tree() {
+    Tree *tree = tree_create(streq);
+
+    printf("lel\n");
+    tree_insert(tree, "martin");
+    printf("lel\n");
+    tree_insert(tree, "ord");
+    tree_insert(tree, "ting");
+    tree_insert(tree, "lelel");
+    printf("lel\n");
+
+    tree_foreach(tree, print);
+}
 
 int cmp(void *a, void *b) {
     return a==b;

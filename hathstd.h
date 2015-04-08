@@ -86,6 +86,32 @@ size_t hashmap_size(HashMap*);
 List *hashmap_keys(HashMap*);
 // HashMap End
 
+// Tree
+
+typedef struct TreeNode {
+    struct TreeNode *left;
+    struct TreeNode *right;
+    struct TreeNode *parent;
+
+    void *data;
+    int color: 1;
+} TreeNode;
+
+typedef struct Tree {
+    TreeNode *root;
+    int (*cmp)(void*, void*);
+} Tree;
+
+Tree *tree_create(int (*cmp)(void*, void*));
+
+int tree_insert(Tree*, void*);
+int tree_delete(Tree*, void*);
+
+int tree_contains(Tree*, void*);
+
+void tree_foreach(Tree*, void (*f)(void*));
+
+// Tree End
 
 // misc functions
 void *emalloc(size_t s);
