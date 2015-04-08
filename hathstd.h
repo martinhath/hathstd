@@ -21,8 +21,10 @@ void *list_pop_back(List*);
 
 void *list_delete(List*, void*, int (*cmp)(void*, void*));
 
+List *list_reverse(List*);
+
 void list_foreach(List*, void (*f)(void*));
-// TODO: list_map
+// TODO: void list_map(List*, void *(*f)(void*));
 
 int list_empty(List*);
 size_t list_size(List*);

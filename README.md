@@ -67,6 +67,7 @@ make install
 | `int list_empty(List*)` | Returns wether the list is empty | O(1) |
 | `size_t list_size(List*)` | Returns the size of the list | O(n) |
 | `int list_contains(List*, void*, int (*cmp)(void*, void*)` | Returns wether the list contains a element such that `cmp(elem, e)` is `true`. | O(n) |
+| `List *list_reverse(List*)` | Reverses the list. Returnes the reversed list | O(n) |
 
 ### `Array`
 

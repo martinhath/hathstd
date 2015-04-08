@@ -112,8 +112,25 @@ int list_contains(List* list, void *elem, int (*cmp)(void *a, void*b)) {
     return 0;
 }
 
-void list_foreach(List* list, void (*function)(void*)) {
+List *list_reverse(List *list) {
+    if (list_empty(list))
+        return list;
+    ListNode *prev = list->head;
+    ListNode *node = prev->next;
+    prev->next = NULL;
+    while (node != NULL) {
+        ListNode *n = node->next;
+        node->next = prev;
+        prev = node;
+        node = n;
+    }
+    list->head = prev;
+    return list;
+}
+
+void list_foreach(List *list, void (*function)(void*)) {
     for (ListNode *node = list->head; node != NULL; node = node->next)
         function(node->val);
 }
+
 // End Linked List

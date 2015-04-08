@@ -20,6 +20,7 @@ void test_list_pop_back();
 void test_list_empty();
 void test_list_pop_empty();
 void test_list_delete();
+void test_list_reverse();
 
 void test_array_add();
 void test_array_set();
@@ -45,6 +46,7 @@ int main() {
     test_list_empty();
     test_list_pop_empty();
     test_list_delete();
+    test_list_reverse();
 
     printf("\n~~~ Testing Array ~~~\n");
     test_array_set();
@@ -151,6 +153,24 @@ void test_list_delete() {
     list_push(list, "kul");
     true(strcmp(list_delete(list, "er", streq), "er") == 0);
     list_free(list);
+}
+
+void test_list_reverse() {
+#ifdef DEBUG
+    printf("test_list_reverse()\n");
+#endif
+    List *list = list_create();
+    list_push(list, "martin");
+    list_push(list, "linus");
+    list_push(list, "rms");
+    list_push(list, "kek");
+
+    list_reverse(list);
+
+    true(strcmp(list_pop(list), "martin") == 0);
+    list_pop(list);
+    list_pop(list);
+    true(strcmp(list_pop(list), "kek") == 0);
 }
 
 
