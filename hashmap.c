@@ -23,17 +23,15 @@ int hashmap_set(HashMap *hashmap, void *key, void *val) {
         hashmap->array[i] = list_create();
     }
     HashNode *hn = hashnode(key, val);
-    // TODO: broken, can't update
-    if (!list_contains(hashmap->array[i], hn, hashnode_cmp)) {
-        list_push(hashmap->array[i], hn);
-    }
+    list_delete(hashmap->array[i], hn, hashnode_cmp);
+    list_push(hashmap->array[i], hn);
     return 1;
 }
 
 void *hashmap_get(HashMap *hashmap, void *key) {
     size_t i = hashmap->hash(key);
     List *list = hashmap->array[i];
-    // :(
+    // Bad - uses the internals of List
     Node *node = list->head;
     while (node != NULL) {
         HashNode* hn = (HashNode*) node->val;
@@ -55,6 +53,7 @@ void *hashmap_delete(HashMap *hashmap, void *key) {
     if (list == NULL){
         return NULL;
     }
+    // Bad - uses the internals of List
     Node *node = list->head;
     while (node != NULL) {
         HashNode* hn = (HashNode*) node->val;

@@ -24,6 +24,7 @@ void test_array_resize();
 void test_array_clone();
 
 void test_hashmap();
+void test_hashmap_update();
 void test_hashmap_str_str();
 void test_hashmap_delete();
 void test_hashmap_size();
@@ -46,6 +47,7 @@ int main() {
 
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
+    test_hashmap_update();
     test_hashmap_str_str();
     test_hashmap_delete();
     test_hashmap_size();
@@ -262,6 +264,21 @@ void test_hashmap() {
     true(strcmp(str, "er") == 0);
     str = hashmap_get(hashmap, (void*) 2148);
     true(strcmp(str, "kul") == 0);
+
+    hashmap_free(hashmap);
+}
+
+void test_hashmap_update() {
+#ifdef DEBUG
+    printf("test_hashmap_update()\n");
+#endif
+    HashMap *hashmap = hashmap_create(int_hash, key_cmp);
+    hashmap_set(hashmap, (void*) 0, "zero");
+    hashmap_set(hashmap, (void*) 1, "one");
+    hashmap_set(hashmap, (void*) 0, "null");
+
+    char *str = hashmap_get(hashmap, (void*) 0);
+    true(strcmp(str, "null") == 0);
 
     hashmap_free(hashmap);
 }
