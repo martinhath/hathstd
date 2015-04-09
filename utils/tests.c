@@ -46,7 +46,7 @@ void test_str_split() {
     list_foreach(list, free);
     list_free(list);
 
-    list = str_split("hello", "non existant");
+    list = str_split("hello", "non existent");
     true(list_size(list) == 1);
     char *str = list_pop(list);
     true(strcmp(str, "hello")== 0);
