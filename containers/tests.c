@@ -315,7 +315,7 @@ static size_t str_hash(void *p) {
     while((c = *str++) != '\0') {
         hash += c * 0xbabe;
     }
-    return hash % _HASHMAP_CAP;
+    return hash;
 }
 
 void test_hashmap_str_str() {

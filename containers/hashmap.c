@@ -28,7 +28,7 @@ HashMap *hashmap_create_str() {
 }
 
 int hashmap_set(HashMap *hashmap, void *key, void *val) {
-    size_t i = hashmap->hash(key);
+    size_t i = hashmap->hash(key) % _HASHMAP_CAP;
     List *list = hashmap->array[i];
     if (list == NULL) {
         hashmap->array[i] = list_create();
@@ -40,7 +40,7 @@ int hashmap_set(HashMap *hashmap, void *key, void *val) {
 }
 
 void *hashmap_get(HashMap *hashmap, void *key) {
-    size_t i = hashmap->hash(key);
+    size_t i = hashmap->hash(key) % _HASHMAP_CAP;
     List *list = hashmap->array[i];
     // Bad - uses the internals of List
     ListNode *node = list->head;
@@ -59,7 +59,7 @@ static int equals(void *a, void *b) {
 }
 
 void *hashmap_delete(HashMap *hashmap, void *key) {
-    size_t i = hashmap->hash(key);
+    size_t i = hashmap->hash(key) % _HASHMAP_CAP;
     List *list = hashmap->array[i];
     if (list == NULL){
         return NULL;
@@ -139,7 +139,6 @@ static size_t hash_str(void *p) {
         s++;
     }
     hash %= _HASHMAP_CAP;
-    printf("hash('%s')\t= %zu\n", (char*) p, hash);
     return hash;
 }
 

@@ -3,6 +3,7 @@
 
 #include "tests.h"
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -27,5 +28,7 @@ void test_str_split() {
         list_contains(list, " er ", streq) |
         list_contains(list, "er ", streq) |
         list_contains(list, " er", streq)));
+    list_foreach(list, free);
+    list_free(list);
 }
 

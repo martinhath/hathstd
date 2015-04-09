@@ -2,7 +2,8 @@ CC=clang
 FLAGS= -g  -Wall
 LINK = -L$(shell pwd)/ -lhathstd -Wl,-rpath=$(shell pwd)/
 
-LIB_SRC = hathstd.c $(shell find containers utils -name "*.c") 
+DIRS = containers utils
+LIB_SRC = $(shell find $(DIRS) -name "*.c" -not -name "tests.c") 
 LIB_FLAGS = -fPIC
 
 lib: 
