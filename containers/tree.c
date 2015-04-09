@@ -271,6 +271,7 @@ int tree_insert(Tree *tree, void *elem) {
     z->right = NULL;
     z->color = RB_RED;
     tree_insert_fixup(tree, z);
+    return 1;
 }
 
 void tree_free(Tree *tree) {
