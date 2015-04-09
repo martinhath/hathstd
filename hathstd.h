@@ -105,7 +105,7 @@ typedef struct Tree {
 Tree *tree_create(int (*cmp)(void*, void*));
 
 int tree_insert(Tree*, void*);
-int tree_delete(Tree*, void*);
+void *tree_delete(Tree*, void*);
 
 int tree_contains(Tree*, void*);
 

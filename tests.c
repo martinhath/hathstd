@@ -39,6 +39,7 @@ void test_hashmap_keys();
 
 void test_tree();
 void test_tree_contains();
+void test_tree_delete();
 
 
 int main() {
@@ -71,6 +72,7 @@ int main() {
     printf("\n~~~ Testing Tree ~~~\n");
     test_tree();
     test_tree_contains();
+    test_tree_delete();
 
     print_stats();
 }
@@ -427,6 +429,9 @@ void test_hashmap_keys() {
 // Tree
 
 void test_tree() {
+#ifdef DEBUG
+    printf("test_tree()\n");
+#endif
     Tree *tree = tree_create(streq);
 
     tree_insert(tree, "martin");
@@ -440,6 +445,9 @@ int strcmp2(void *s, void *t) {
 }
 
 void test_tree_contains() {
+#ifdef DEBUG
+    printf("test_tree_contains()\n");
+#endif
     Tree *tree = tree_create(strcmp2);
     tree_insert(tree, "martin");
     tree_insert(tree, "hath");
@@ -452,6 +460,31 @@ void test_tree_contains() {
     true(tree_contains(tree, "martin"));
     true(tree_contains(tree, "rms"));
     true(!tree_contains(tree, "kek"));
+}
+
+void test_tree_delete() {
+#ifdef DEBUG
+    printf("test_tree_delete()\n");
+#endif
+    char* strs[7] = {
+        "c", "hath", "knuth", "martin",
+        "ritchie", "rms", "torvalds"
+    };
+    size_t n = sizeof(strs)/sizeof(char*);
+    Tree *tree = tree_create(strcmp2);
+    for (size_t i = 0; i < n; i++) {
+        tree_insert(tree, strs[i]);
+    }
+
+    for (size_t i = 0; i < n; i++) {
+        tree_delete(tree, strs[i]);
+        for (size_t j = 0; j <= i; j++) {
+            true(!tree_contains(tree, strs[j]));
+        }
+        for (size_t j = i + 1; j < n; j++) {
+            true(tree_contains(tree, strs[j]));
+        }
+    }
 }
 
 int cmp(void *a, void *b) {
