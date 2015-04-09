@@ -1,4 +1,4 @@
-#include "hathstd.h"
+#include "../hathstd.h"
 
 #include <stdio.h>
 #include <stdlib.h>
