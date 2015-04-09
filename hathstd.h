@@ -103,6 +103,7 @@ typedef struct Tree {
 } Tree;
 
 Tree *tree_create(int (*cmp)(void*, void*));
+void tree_free(Tree* tree);
 
 int tree_insert(Tree*, void*);
 void *tree_delete(Tree*, void*);

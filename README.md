@@ -106,6 +106,7 @@ Note the difference between `foreach` and `map`. Also note that you should use `
 | Function name | Description | Complexity |
 |---------------|-------------|------------|
 | `Tree *tree_create(int (*cmp)(void*, void*))` | Creates a new tree. Takes a function that compares values you put in the tree. The funcion should return as `strcmp` does. | O(1) |
+| `void tree_free(Tree*)` | Frees the memory allocated. | O(n) |
 | `int tree_contains(Tree*, void*)` | Returns `true` if the tree contains the given element. | O(lg n) |
 | `void tree_foreach(Tree*, void (*f)(void*))` | Runs the given function on all elements. | O(n) |
 | `int tree_insert(Tree*, void*)` | Insert the element into the tree | O(lg n) |

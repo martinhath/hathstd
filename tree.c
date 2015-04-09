@@ -8,6 +8,8 @@
  * the book.
  */
 
+#include <stdlib.h>
+
 #define RB_RED 0
 #define RB_BLACK 1
 
@@ -19,6 +21,7 @@ static void tree_transplant(Tree*, TreeNode*, TreeNode*);
 static void tree_delete_node(Tree*, TreeNode*);
 static void tree_delete_fixup(Tree*, TreeNode*);
 static TreeNode *tree_minimum(TreeNode*);
+static void tree_free_node(TreeNode*);
 
 
 Tree *tree_create(int (*cmp)(void*, void*)) {
@@ -123,6 +126,7 @@ void *tree_delete(Tree *tree, void *elem) {
         int r = tree->cmp(node->data, elem);
         if (r == 0) {
             tree_delete_node(tree, node);
+            free(node);
             return elem;
         }
         if (r > 0)  node = node->left;
@@ -267,5 +271,17 @@ int tree_insert(Tree *tree, void *elem) {
     z->right = NULL;
     z->color = RB_RED;
     tree_insert_fixup(tree, z);
+}
+
+void tree_free(Tree *tree) {
+    tree_free_node(tree->root);
+}
+
+static void tree_free_node(TreeNode *node) {
+    if (node == NULL)
+        return;
+    tree_free_node(node->left);
+    tree_free_node(node->right);
+    free(node);
 }
 
