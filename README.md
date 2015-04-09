@@ -6,7 +6,7 @@ In any case, I've decided to write a little library for myself, containing stuff
 ### Notes
 
  - For all functions that returns an `int` for errors, zero is failure.
- - For containers, the elements you insert into the container are not freed. This means if you create a list of strings, and call `list_free(list)`, the strings will not be freed. You will have to to this yourself.
+ - For containers, the elements you insert into the container are not freed. This means if you create a list of strings, and call `list_free(list)`, the strings will not be freed. You will have to to this yourself (simply `list_foreach(list, free);`).
 
 ## Usage
 
@@ -114,3 +114,10 @@ Note the difference between `foreach` and `map`. Also note that you should use `
 | `int tree_insert(Tree*, void*)` | Insert the element into the tree | O(lg n) |
 | `void *tree_delete(Tree*, void*)` | Deletes the element | O(lg n) |
 
+## Utility functions
+
+### String
+
+| Function name | Description |
+|---------------|-------------|
+| `List *str_split(char*, char*)` | Splits the first string on each delimiter (second string). __Warning__: allocates memory for the slices, which you need to free yourself!
