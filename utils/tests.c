@@ -7,6 +7,10 @@
 #include <string.h>
 
 void test_utils() {
+    printf("\n");
+    printf("######################\n");
+    printf("### Testing utils/ ###\n");
+    printf("######################\n");
     test_str_split();
 }
 

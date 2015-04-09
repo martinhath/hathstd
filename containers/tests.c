@@ -8,7 +8,10 @@
 
 
 void test_containers() {
+    printf("\n");
+    printf("###########################\n");
     printf("### Testing containers/ ###\n");
+    printf("###########################\n");
     printf("\n~~~ Testing List ~~~\n");
     test_list_push();
     test_list_push_back();
