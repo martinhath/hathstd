@@ -32,7 +32,6 @@ void test_containers() {
 
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
-    return;
     test_hashmap_update();
     test_hashmap_str_str();
     test_hashmap_delete();
@@ -284,8 +283,6 @@ void test_hashmap() {
     HashMap *hashmap = hashmap_create(int_hash, key_cmp);
 
     true(hashmap_set(hashmap, (void*) 100, "martin"));
-    hashmap_free(hashmap);
-    return;
     true(hashmap_set(hashmap, (void*) 1124, "er"));
     true(hashmap_set(hashmap, (void*) 2148, "kul"));
 
@@ -296,6 +293,8 @@ void test_hashmap() {
     true(strcmp(str, "er") == 0);
     str = hashmap_get(hashmap, (void*) 2148);
     true(strcmp(str, "kul") == 0);
+
+    hashmap_free(hashmap);
 }
 
 void test_hashmap_update() {

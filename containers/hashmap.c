@@ -111,6 +111,7 @@ void hashmap_free(HashMap *hashmap) {
     for (size_t i = 0; i < _HASHMAP_CAP; i++) {
         List *list = hashmap->array[i];
         if (list != NULL) {
+            list_foreach(list, free);
             list_free(list);
         }
     }

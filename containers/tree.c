@@ -276,6 +276,7 @@ int tree_insert(Tree *tree, void *elem) {
 
 void tree_free(Tree *tree) {
     tree_free_node(tree->root);
+    free(tree);
 }
 
 static void tree_free_node(TreeNode *node) {
