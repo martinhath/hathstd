@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define _HASHMAP_CAP 1021 // is prime
+
 static HashNode *hashnode(void*, void*);
 static int hashnode_cmp(void*, void*);
 

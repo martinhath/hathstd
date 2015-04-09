@@ -27,7 +27,7 @@ int stringcmp(void *a, void *b) {
 }
 
 void print(void *str) {
-    printf("%s ", str);
+    printf("'%s' ", str);
 }
 
 void println(void *s) {
@@ -51,7 +51,7 @@ void eq(int a, int b) {
 }
 
 void print_stats() {
-    printf("================\n");
+    printf("\n\n================\n");
     printf("Ran all tests.\n%zu/%zu passed.\n",
             N-F, N);
 }
