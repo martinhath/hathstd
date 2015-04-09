@@ -70,8 +70,9 @@ void *hashmap_delete(HashMap *hashmap, void *key) {
         HashNode* hn = (HashNode*) node->val;
         if (hashmap->keycmp(key, hn->key)) {
             list_delete(list, hn, equals);
+            void *val = hn->val;
             free(hn);
-            return hn->val;
+            return val;
         }
         node = node->next;
     }
@@ -113,6 +114,8 @@ void hashmap_free(HashMap *hashmap) {
             list_free(list);
         }
     }
+    free(hashmap->array);
+    free(hashmap);
 }
 
 static int hashnode_cmp(void *h1, void *h2) {
