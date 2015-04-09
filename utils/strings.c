@@ -10,14 +10,17 @@ List *str_split(const char *string, const char *delimiter) {
     const char *end = string;
     while (*end++)
         ;
-    while (string <= end) {
+    while (string < end) {
         char *p = strstr(string, delimiter);
+        if (p == NULL)
+            p = (char*) string + strlen(string);
         int n = p - string;
-        if (n < 0)
-            n = end - string;
-        char *str = emalloc(n * sizeof(char));
-        memmove(str, string, n);
-        list_push(list, str);
+        if (n != 0) {
+            char *str = emalloc(n * sizeof(char) + 1);
+            memmove(str, string, n);
+            str[n] = '\0';
+            list_push(list, str);
+        }
         string += n + delim_len;
     }
     list_reverse(list);

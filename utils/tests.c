@@ -30,5 +30,18 @@ void test_str_split() {
         list_contains(list, " er", streq)));
     list_foreach(list, free);
     list_free(list);
+
+    list = str_split("a b c d ", " ");
+    true(list_size(list) == 4);
+    list_free(list);
+
+    list = str_split("  1    2 3 9 ", " ");
+    true(list_size(list) == 4);
+    int t = list_contains(list, "1", stringcmp) &
+            list_contains(list, "2", stringcmp) &
+            list_contains(list, "3", stringcmp) &
+            list_contains(list, "9", stringcmp);
+    true(t);
+    list_free(list);
 }
 
