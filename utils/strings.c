@@ -13,7 +13,7 @@ List *str_split(const char *string, const char *delimiter) {
     while (string < end) {
         char *p = strstr(string, delimiter);
         if (p == NULL)
-            p = (char*) string + strlen(string);
+            p = (char*) end - 1;
         int n = p - string;
         if (n != 0) {
             char *str = emalloc(n * sizeof(char) + 1);
