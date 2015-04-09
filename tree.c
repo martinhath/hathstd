@@ -2,6 +2,10 @@
 
 /**
  * Red-Black tree
+ *
+ * The tree is implemented as in cormen et al. chapter 12.
+ * Most of the code is simply translated pseudo code from
+ * the book.
  */
 
 #define RB_RED 0

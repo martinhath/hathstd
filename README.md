@@ -109,4 +109,5 @@ Note the difference between `foreach` and `map`. Also note that you should use `
 | `int tree_contains(Tree*, void*)` | Returns `true` if the tree contains the given element. | O(lg n) |
 | `void tree_foreach(Tree*, void (*f)(void*))` | Runs the given function on all elements. | O(n) |
 | `int tree_insert(Tree*, void*)` | Insert the element into the tree | O(lg n) |
+| `void *tree_delete(Tree*, void*)` | Deletes the element | O(lg n) |
 
