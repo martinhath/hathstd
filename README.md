@@ -6,6 +6,7 @@ In any case, I've decided to write a little library for myself, containing stuff
 ### Notes
 
  - For all functions that returns an `int` for errors, zero is failure.
+ - For containers, the elements you insert into the container are not freed. This means if you create a list of strings, and call `list_free(list)`, the strings will not be freed. You will have to to this yourself.
 
 ## Usage
 
