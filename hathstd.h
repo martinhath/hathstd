@@ -1,4 +1,11 @@
+#ifndef HATHSTD_H
+#define HATHSTD_H
+
 #include <stddef.h>
+
+////////////////
+// Containers //
+////////////////
 
 // Linked List implementation
 typedef struct ListNode {
@@ -112,9 +119,15 @@ void *tree_delete(Tree*, void*);
 int tree_contains(Tree*, void*);
 
 void tree_foreach(Tree*, void (*f)(void*));
-
 // Tree End
 
-// misc functions
+////////////////////
+// Util functions //
+////////////////////
+
 void *emalloc(size_t s);
 
+
+List *str_split(const char*, const char*);
+
+#endif

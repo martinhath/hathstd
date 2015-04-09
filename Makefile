@@ -2,7 +2,7 @@ CC=clang
 FLAGS= -g  -Wall
 LINK = -L$(shell pwd)/ -lhathstd -Wl,-rpath=$(shell pwd)/
 
-LIB_SRC = hathstd.c $(shell find containers -name "*.c")
+LIB_SRC = hathstd.c $(shell find containers utils -name "*.c") 
 LIB_FLAGS = -fPIC
 
 lib: 
@@ -14,7 +14,7 @@ lib-debug:
 	gcc -shared -Wl,-soname,libhathstd.so -o libhathstd.so *.o
 
 test: lib-debug
-	$(CC) $(FLAGS) $(LINK) -DDEBUG tests.c -o test
+	$(CC) $(FLAGS) $(LINK) -DDEBUG $(shell find . -name "tests.c") -o test
 
 test-run: test
 	@echo -e "\n############\n# Running: #\n############\n"

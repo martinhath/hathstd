@@ -1,12 +1,14 @@
 #include "../hathstd.h"
 #include "../tests.h"
 
+#include "tests.h"
+
 #include <stdio.h>
 #include <string.h>
 
-void test_str_split(void);
-int stringcmp(void*, void*);
-void true(int);
+void test_utils() {
+    test_str_split();
+}
 
 void test_str_split() {
     const char *string = "martin er kul";
@@ -19,9 +21,5 @@ void test_str_split() {
         list_contains(list, " er ", stringcmp) |
         list_contains(list, "er ", stringcmp) |
         list_contains(list, " er", stringcmp));
-}
-
-int stringcmp(void *p, void *q) {
-    return strcmp((char*) p, (char*) q);
 }
 

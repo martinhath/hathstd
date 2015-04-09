@@ -5,6 +5,7 @@ void print_stats();
 void print(void*);
 void println(void*);
 
-int cmp(void*, void*);
+int ptrcmp(void*, void*);
+int stringcmp(void*, void*);
 int streq(void*, void*);
 

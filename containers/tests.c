@@ -199,11 +199,11 @@ void test_array_map() {
 
     Array *squares = array_map(array, square);
 
-    true(array_contains(squares, (void*) 81, cmp));
-    true(array_contains(squares, (void*) 100, cmp));
-    true(array_contains(squares, (void*) 49, cmp));
-    true(!array_contains(squares, (void*) 50, cmp));
-    true(!array_contains(squares, (void*) 30, cmp));
+    true(array_contains(squares, (void*) 81, ptrcmp));
+    true(array_contains(squares, (void*) 100, ptrcmp));
+    true(array_contains(squares, (void*) 49, ptrcmp));
+    true(!array_contains(squares, (void*) 50, ptrcmp));
+    true(!array_contains(squares, (void*) 30, ptrcmp));
 
     array_free(squares);
     array_free(array);
@@ -217,7 +217,7 @@ void test_array_delete() {
 
     size_t i = 5;
     void *e = array_delete(array, i);
-    true(!array_contains(array, e, cmp));
+    true(!array_contains(array, e, ptrcmp));
     array_free(array);
 }
 
