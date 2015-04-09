@@ -33,6 +33,7 @@ void test_str_split() {
 
     list = str_split("a b c d ", " ");
     true(list_size(list) == 4);
+    list_foreach(list, free);
     list_free(list);
 
     list = str_split("  1    2 3 9 ", " ");
@@ -42,6 +43,14 @@ void test_str_split() {
             list_contains(list, "3", stringcmp) &
             list_contains(list, "9", stringcmp);
     true(t);
+    list_foreach(list, free);
     list_free(list);
+
+    list = str_split("hello", "non existant");
+    true(list_size(list) == 1);
+    char *str = list_pop(list);
+    true(strcmp(str, "hello")== 0);
+    list_free(list);
+    free(str);
 }
 
