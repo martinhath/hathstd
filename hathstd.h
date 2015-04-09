@@ -74,6 +74,7 @@ typedef struct HashNode {
 #define _HASHMAP_CAP 1023
 
 HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*));
+HashMap *hashmap_create_str(void);
 void hashmap_free(HashMap*);
 
 int hashmap_set(HashMap*, void*, void*);

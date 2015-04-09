@@ -80,7 +80,9 @@ void *list_delete(List *list, void *elem, int (*cmp)(void*, void*)) {
             prev->next = node->next;
             if (list->head == node)
                 list->head = NULL;
-            return node->val;
+            void *val = node->val;
+            free(node);
+            return val;
         }
         prev = node;
         node = node->next;

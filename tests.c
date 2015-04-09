@@ -36,6 +36,7 @@ void test_hashmap_str_str();
 void test_hashmap_delete();
 void test_hashmap_size();
 void test_hashmap_keys();
+void test_hashmap_str();
 
 void test_tree();
 void test_tree_contains();
@@ -68,6 +69,7 @@ int main() {
     test_hashmap_delete();
     test_hashmap_size();
     test_hashmap_keys();
+    test_hashmap_str();
 
     printf("\n~~~ Testing Tree ~~~\n");
     test_tree();
@@ -423,6 +425,18 @@ void test_hashmap_keys() {
     true(list_contains(keys, (void*) 69, key_cmp));
     true(list_contains(keys, (void*) 123, key_cmp));
     true(list_contains(keys, (void*) 9001, key_cmp));
+    hashmap_free(hashmap);
+}
+
+void test_hashmap_str() {
+#ifdef DEBUG
+    printf("test_hashmap_str()\n");
+#endif
+    HashMap *hashmap = hashmap_create_str();
+    hashmap_set(hashmap, "en", "1");
+    hashmap_set(hashmap, "to", "2");
+    hashmap_set(hashmap, "tre", "3");
+    true(hashmap_size(hashmap) == 3);
     hashmap_free(hashmap);
 }
 // END HashMap

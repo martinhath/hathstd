@@ -94,7 +94,8 @@ Note the difference between `foreach` and `map`. Also note that you should use `
 
 | Function name | Description | Complexity |  
 |---------------|-------------|------------|
-| `HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*))` | Creates a new hashmap. The first function is the hashing function, which takes a key. The second function is a key compare function | O(n) |
+| `HashMap *hashmap_create(size_t (*hash)(void*), int (*keycmp)(void*, void*))` | Creates a new hashmap. The first function is the hashing function, which takes a key. The second function is a key compare function | O(1) |
+| `HashMap *hashmap_create_str(void)` | Creates a new hashmap, where the key is of type `char*` | O(1) |
 | `void hashmap_free(HashMap*)` | Frees the hashmap | O(n) |
 | `int hashmap_set(HashMap*, void*, void*)` | set (key, value). Returns 0 on failure | O(1) |
 | `void *hashmap_get(HashMap*, void*)` | Gets the value with the supplied key | O(1) |

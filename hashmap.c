@@ -1,9 +1,14 @@
 #include "hathstd.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static HashNode *hashnode(void*, void*);
 static int hashnode_cmp(void*, void*);
+
+static size_t hash_str(void*);
+static int str_cmp(void*, void*);
 
 HashMap *hashmap_create(size_t (*hash)(void*),
         int (*keycmp)(void*, void*)) {
@@ -14,6 +19,10 @@ HashMap *hashmap_create(size_t (*hash)(void*),
     for (size_t i = 0; i < _HASHMAP_CAP; i++)
         hashmap->array[i] = NULL;
     return hashmap;
+}
+
+HashMap *hashmap_create_str() {
+    return hashmap_create(hash_str, str_cmp);
 }
 
 int hashmap_set(HashMap *hashmap, void *key, void *val) {
@@ -59,6 +68,7 @@ void *hashmap_delete(HashMap *hashmap, void *key) {
         HashNode* hn = (HashNode*) node->val;
         if (hashmap->keycmp(key, hn->key)) {
             list_delete(list, hn, equals);
+            free(hn);
             return hn->val;
         }
         node = node->next;
@@ -114,4 +124,23 @@ static HashNode *hashnode(void *key, void *val) {
     hn->key = key;
     hn->val = val;
     return hn;
+}
+
+// Convenient default methods
+static size_t hash_str(void *p) {
+#define MUL 7
+#define ACC 13
+    size_t hash = 0;
+    char *s = (char*) p;
+    while (*s) {
+        hash += *s * MUL + ACC;
+        s++;
+    }
+    hash %= _HASHMAP_CAP;
+    printf("hash('%s')\t= %zu\n", (char*) p, hash);
+    return hash;
+}
+
+static int str_cmp(void *p, void *q) {
+    return strcmp((char*) p, (char*) q);
 }
