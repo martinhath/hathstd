@@ -56,6 +56,11 @@ int     array_contains(Array*, void*, int (*cmp)(void*, void*));
 void *  array_delete(Array*, size_t);
 void    array_free(Array*);
 
+void *  array_iterator(Array*);
+void *  array_it_get(Array*, void*);
+void *  array_it_next(Array*, void*);
+int     array_it_end(Array*, void*);;
+
 
 // Safe array end
 

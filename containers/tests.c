@@ -30,6 +30,7 @@ void test_containers() {
     test_array_delete();
     test_array_contains();
     test_array_clone();
+    test_array_iterator();
 
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
@@ -294,6 +295,28 @@ void test_array_clone() {
     printf("\n");
     array_free(array);
     array_free(copy);
+}
+
+void test_array_iterator() {
+    Array *array = array_create();
+    array_add(array, "martin");
+    array_add(array, "is");
+    array_add(array, "a");
+    array_add(array, "pretty");
+    array_add(array, "cool");
+    array_add(array, "guy");
+
+    printf("array root: %p\n", array->array);
+    size_t i = 0;
+    for (void *it = array_iterator(array);
+            !array_it_end(array, it);
+            it = array_it_next(array, it)) {
+        char *str = (char*) array_it_get(array, it);
+        printf("%d = %p\n", i++, str);
+        printf("%s\n", str);
+    }
+    printf("\n");
+
 }
 
 // HashMap
