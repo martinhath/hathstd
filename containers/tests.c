@@ -20,6 +20,7 @@ void test_containers() {
     test_list_pop_empty();
     test_list_delete();
     test_list_reverse();
+    test_list_iterator();
 
     printf("\n~~~ Testing Array ~~~\n");
     test_array_set();
@@ -151,6 +152,34 @@ void test_list_reverse() {
     list_pop(list);
     true(strcmp(list_pop(list), "kek") == 0);
     list_free(list);
+}
+
+void test_list_iterator() {
+#ifdef DEBUG
+    printf("test_list_iterator()\n");;
+#endif
+    List *list = list_create();
+    list_push(list, "123");
+    list_push(list, "321");
+    list_push(list, "martin");
+
+    void *it = list_iterator(list);
+    char *str;
+
+    str = (char*) list_it_get(list, it);
+    true(strcmp(str, "martin") == 0);
+    it = list_it_next(list, it);
+    true(!list_it_end(list, it));
+
+    str = (char*) list_it_get(list, it);
+    true(strcmp(str, "321") == 0);
+    it = list_it_next(list, it);
+    true(!list_it_end(list, it));
+
+    str = (char*) list_it_get(list, it);
+    true(strcmp(str, "123") == 0);
+    it = list_it_next(list, it);
+    true(list_it_end(list, it));
 }
 
 

@@ -7,6 +7,7 @@ void test_list_empty();
 void test_list_pop_empty();
 void test_list_delete();
 void test_list_reverse();
+void test_list_iterator();
 
 void test_array_add();
 void test_array_set();

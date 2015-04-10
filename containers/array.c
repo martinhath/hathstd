@@ -43,7 +43,8 @@ void *array_delete(Array *array, size_t i) {
     if (!array_check_size(array, i))
         return NULL;
     void *elem = array->array[i];
-    memmove(array->array + i, array->array + i + 1, (array->size - i - 1) * sizeof(void*));
+    memmove(array->array + i, array->array + i + 1,
+            (array->size - i - 1) * sizeof(void*));
     array->size--;
     return elem;
 }

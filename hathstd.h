@@ -29,6 +29,11 @@ void    list_foreach(List*, void (*f)(void*));
 int     list_empty(List*);
 size_t  list_size(List*);
 int     list_contains(List*, void*, int (*cmp)(void*, void*));
+
+void *  list_iterator(List*);
+void *  list_it_get(List*, void*);
+void *  list_it_next(List*, void*);
+int     list_it_end(List*, void*);
 // TODO: void list_map(List*, void *(*f)(void*));
 // End Linked List
 
@@ -50,6 +55,7 @@ size_t  array_size(Array*);
 int     array_contains(Array*, void*, int (*cmp)(void*, void*));
 void *  array_delete(Array*, size_t);
 void    array_free(Array*);
+
 
 // Safe array end
 
