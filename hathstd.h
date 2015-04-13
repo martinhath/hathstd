@@ -40,6 +40,7 @@ typedef struct Array {
 } Array;
 
 Array * array_create(void);
+Array * array_create_from_cap(size_t);
 void *  array_get(Array*, size_t);
 int     array_set(Array*, size_t, void*);
 int     array_add(Array*, void*);

@@ -11,10 +11,14 @@ static int array_check_size(Array*, size_t);
 
 Array *array_create(void) {
 #define INIT_CAP 1023
+    return array_create_from_cap(INIT_CAP);
+}
+
+Array *array_create_from_cap(size_t c) {
     Array *arr = emalloc(sizeof(Array));
-    arr->capacity = INIT_CAP;
+    arr->capacity = c;
     arr->size = 0;
-    arr->array = emalloc(sizeof(void*) * INIT_CAP);
+    arr->array = emalloc(sizeof(void*) * c);
     return arr;
 }
 
@@ -43,7 +47,8 @@ void *array_delete(Array *array, size_t i) {
     if (!array_check_size(array, i))
         return NULL;
     void *elem = array->array[i];
-    memmove(array->array + i, array->array + i + 1, (array->size - i - 1) * sizeof(void*));
+    memmove(array->array + i, array->array + i + 1,
+            (array->size - i - 1) * sizeof(void*));
     array->size--;
     return elem;
 }
@@ -115,8 +120,8 @@ static void array_resize(Array *array) {
     array->capacity = cap;
 }
 
-// does not pack!
 static void array_resize_to(Array *array, size_t cap) {
+    // does not pack!
     if (array->capacity >= cap) return;
     void **arr = emalloc(cap * sizeof(void*));
     memmove(arr, array->array, array->size * sizeof(void*));
@@ -126,4 +131,3 @@ static void array_resize_to(Array *array, size_t cap) {
 
 }
 
-// End Safe Array
