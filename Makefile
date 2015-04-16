@@ -2,7 +2,7 @@ CC=clang
 FLAGS= -g  -Wall
 LINK = -L$(shell pwd)/ -lhathstd -Wl,-rpath=$(shell pwd)/
 
-DIRS = containers utils
+DIRS = containers utils experimental
 LIB_SRC = $(shell find $(DIRS) -name "*.c" -not -name "tests.c") 
 LIB_FLAGS = -fPIC
 

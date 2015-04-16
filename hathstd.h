@@ -106,4 +106,17 @@ void *emalloc(size_t s);
 
 List *str_split(const char*, const char*);
 
+///////////////////
+// Experimentals //
+///////////////////
+
+typedef struct Generator {
+    void *val;
+    void* (*f)(void*);
+} Generator;
+
+Generator *generator_create(void*, void* (*f)(void*));
+
+void *generator_next(Generator*);
+
 #endif
