@@ -32,6 +32,7 @@ void test_containers() {
 
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
+    test_hashmap_get();
     test_hashmap_update();
     test_hashmap_str_str();
     test_hashmap_delete();
@@ -297,6 +298,28 @@ void test_hashmap() {
     hashmap_free(hashmap);
 }
 
+static size_t str_hash(void *p) {
+    size_t hash = 0;
+    char *str = p;
+    char c;
+    while((c = *str++) != '\0') {
+        hash += c * 0xbabe;
+    }
+    return hash;
+}
+
+void test_hashmap_get() {
+    HashMap *hashmap = hashmap_create(str_hash, streq);
+    hashmap_set(hashmap, "one", "o n e");
+
+    char *str;
+    str = hashmap_get(hashmap, "lel");
+    true(str == NULL);
+
+    str = hashmap_get(hashmap, "one");
+    true(strcmp(str, "o n e") == 0);
+}
+
 void test_hashmap_update() {
 #ifdef DEBUG
     printf("test_hashmap_update()\n");
@@ -310,16 +333,6 @@ void test_hashmap_update() {
     true(strcmp(str, "null") == 0);
 
     hashmap_free(hashmap);
-}
-
-static size_t str_hash(void *p) {
-    size_t hash = 0;
-    char *str = p;
-    char c;
-    while((c = *str++) != '\0') {
-        hash += c * 0xbabe;
-    }
-    return hash;
 }
 
 void test_hashmap_str_str() {

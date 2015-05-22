@@ -42,6 +42,7 @@ int hashmap_set(HashMap *hashmap, void *key, void *val) {
 void *hashmap_get(HashMap *hashmap, void *key) {
     size_t i = hashmap->hash(key) % _HASHMAP_CAP;
     List *list = hashmap->array[i];
+    if (list == NULL) return NULL;
     // Bad - uses the internals of List
     ListNode *node = list->head;
     while (node != NULL) {

@@ -17,6 +17,7 @@ void test_array_contains();
 void test_array_clone();
 
 void test_hashmap();
+void test_hashmap_get();
 void test_hashmap_update();
 void test_hashmap_str_str();
 void test_hashmap_delete();
