@@ -2,6 +2,7 @@
 
 #include "containers/tests.h"
 #include "utils/tests.h"
+#include "experimental/tests.h"
 
 #include <stdio.h>
 #include <stddef.h>
@@ -11,6 +12,7 @@ int main() {
     // entry points for tests.
     test_containers();
     test_utils();
+    test_experimentals();
 
     print_stats();
 }
