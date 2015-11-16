@@ -20,6 +20,7 @@ void test_containers() {
     test_list_pop_empty();
     test_list_delete();
     test_list_reverse();
+    test_list_iterator();
 
     printf("\n~~~ Testing Array ~~~\n");
     test_array_set();
@@ -29,6 +30,7 @@ void test_containers() {
     test_array_delete();
     test_array_contains();
     test_array_clone();
+    test_array_iterator();
 
     printf("\n~~~ Testing HashMap ~~~\n");
     test_hashmap();
@@ -154,6 +156,34 @@ void test_list_reverse() {
     list_free(list);
 }
 
+void test_list_iterator() {
+#ifdef DEBUG
+    printf("test_list_iterator()\n");;
+#endif
+    List *list = list_create();
+    list_push(list, "123");
+    list_push(list, "321");
+    list_push(list, "martin");
+
+    void *it = list_iterator(list);
+    char *str;
+
+    str = (char*) list_it_get(list, it);
+    true(strcmp(str, "martin") == 0);
+    it = list_it_next(list, it);
+    true(!list_it_end(list, it));
+
+    str = (char*) list_it_get(list, it);
+    true(strcmp(str, "321") == 0);
+    it = list_it_next(list, it);
+    true(!list_it_end(list, it));
+
+    str = (char*) list_it_get(list, it);
+    true(strcmp(str, "123") == 0);
+    it = list_it_next(list, it);
+    true(list_it_end(list, it));
+}
+
 
 // end list
 
@@ -266,6 +296,28 @@ void test_array_clone() {
     printf("\n");
     array_free(array);
     array_free(copy);
+}
+
+void test_array_iterator() {
+    Array *array = array_create();
+    array_add(array, "martin");
+    array_add(array, "is");
+    array_add(array, "a");
+    array_add(array, "pretty");
+    array_add(array, "cool");
+    array_add(array, "guy");
+
+    printf("array root: %p\n", array->array);
+    size_t i = 0;
+    for (void *it = array_iterator(array);
+            !array_it_end(array, it);
+            it = array_it_next(array, it)) {
+        char *str = (char*) array_it_get(array, it);
+        printf("%d = %p\n", i++, str);
+        printf("%s\n", str);
+    }
+    printf("\n");
+
 }
 
 // HashMap

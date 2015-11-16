@@ -135,4 +135,22 @@ void list_foreach(List *list, void (*function)(void*)) {
         function(node->val);
 }
 
+void *list_iterator(List *list) {
+    return list->head;
+}
+
+void *list_it_get(List *list, void *it) {
+    ListNode *node = (ListNode*) it;
+    return node->val;
+}
+
+void *list_it_next(List* list, void *it) {
+    ListNode *node = (ListNode*) it;
+    return node->next;
+}
+
+int list_it_end(List *list, void *it) {
+    return it == NULL;
+}
+
 // End Linked List

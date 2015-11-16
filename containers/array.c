@@ -91,6 +91,24 @@ size_t array_size(Array *array) {
     return array->size;
 }
 
+void *  array_iterator(Array *array) {
+    return array->array;
+}
+
+void *  array_it_get(Array *array, void *it) {
+    // looks bad, but *it doens't work, of course.
+    return (void*) (*((size_t*)it));
+}
+
+void *  array_it_next(Array *array, void *it) {
+    return it + sizeof(void*);
+}
+
+int     array_it_end(Array *array, void *it) {
+    return it == array->array + array->size;
+}
+
+
 void array_free(Array *array) {
     free(array->array);
     free(array);

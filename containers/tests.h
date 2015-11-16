@@ -7,6 +7,7 @@ void test_list_empty();
 void test_list_pop_empty();
 void test_list_delete();
 void test_list_reverse();
+void test_list_iterator();
 
 void test_array_add();
 void test_array_set();
@@ -15,6 +16,7 @@ void test_array_map();
 void test_array_delete();
 void test_array_contains();
 void test_array_clone();
+void test_array_iterator();
 
 void test_hashmap();
 void test_hashmap_get();
